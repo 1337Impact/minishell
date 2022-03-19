@@ -6,7 +6,7 @@
 /*   By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:32:40 by tnamir            #+#    #+#             */
-/*   Updated: 2022/03/19 15:58:19 by tnamir           ###   ########.fr       */
+/*   Updated: 2022/03/19 18:47:23 by tnamir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ typedef struct s_minishell
 {
 	int		exita;
 	char	*prompt;
-	char	*current_dir;
+	char	current_dir[200];
 }	t_minishell;
 
 void	execute(char *input, char **envp, t_minishell *minishell, char	**argv);
