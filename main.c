@@ -6,7 +6,7 @@
 /*   By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:30:16 by tnamir            #+#    #+#             */
-/*   Updated: 2022/03/19 16:12:06 by tnamir           ###   ########.fr       */
+/*   Updated: 2022/03/19 17:29:23 by tnamir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,10 @@ static	void	conditions0(t_minishell *minishell,
 	else if (f_or_d(input) == 'd')
 		chdir(input);
 	else
+	{
+		printf("minishell: command not found: %s\n", input);
 		minishell->prompt = RED"👹 Minishell ➤\033[0m";
+	}
 }
 
 int	main(int c, char **v, char **envp)
