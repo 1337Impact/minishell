@@ -54,4 +54,4 @@ int	main(int c, char **v, char **envp)
 		free(input);
 	}
 	return (0);
-} 
+}
