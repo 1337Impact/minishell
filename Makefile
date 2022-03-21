@@ -6,7 +6,7 @@
 #    By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/15 16:38:27 by tnamir            #+#    #+#              #
-#    Updated: 2022/03/21 14:10:13 by tnamir           ###   ########.fr        #
+#    Updated: 2022/03/21 18:03:08 by tnamir           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ HEADER = minishell.h
 
 FLAGS = -Wall -Wextra -Werror
 
-SRC = main.c ./files/execute.c ./files/f_or_d.c ./files/sp_remover.c
+SRC = main.c ./files/execute.c ./files/f_or_d.c ./files/sp_remover.c ./files/quotes_handler.c
 
 NAME = minishell
 
@@ -27,10 +27,10 @@ OBJS = $(SRC:.c=.o)
 all : $(NAME)
 
 $(NAME) : $(OBJS) $(LIBFT)
-	cc $(FLAGS) $(OBJS) $(LIBFT) -o $(NAME) -lreadline
+	@cc $(FLAGS) $(OBJS) $(LIBFT) -o $(NAME) -lreadline
 
 %.o: %.c $(HEADER)
-	cc $(FLAGS) -c -o $@ $<
+	@cc $(FLAGS) -c -o $@ $<
 
 $(LIBFT) :
 	@$(MAKE) -C ./libft
