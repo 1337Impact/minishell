@@ -6,7 +6,7 @@
 /*   By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 15:29:23 by tnamir            #+#    #+#             */
-/*   Updated: 2022/03/21 18:06:37 by tnamir           ###   ########.fr       */
+/*   Updated: 2022/03/21 20:35:33 by tnamir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	count_cmds(char *input)
 {
-	int i;
+	int	i;
 	int	counter;
 
 	i = -1;
@@ -35,15 +35,33 @@ int	count_cmds(char *input)
 	return (++counter);
 }
 
-// static	int	cpy_till_char(char	*input, char c)
-// {
-// 	int	x;
+static	char	**cpy_it(char	*input, char **options)
+{
+	int	x;
+	int	y;
+	int	size;
+	int	sub_size;
+	int	start;
 
-// 	x = -1;
-// 	while (input[++x] != c)
-// 		;
-// 	return (x);
-// }
+	size = count_cmds(input);
+	options = ft_calloc(size, sizeof(char *));
+	x = 0;
+	y = -1;
+	while (++y < size)
+	{
+		start = x;
+		sub_size = 0;
+		while (input[x] != ' ' && input[x])
+		{
+			x++;
+			sub_size++;
+		}
+		while (input[x] == ' ' && input[x])
+			x++;
+		options[y] = ft_substr(input, start, sub_size);
+	}
+	return (options);
+}
 
 // static void	quote(char	*input, char	**options)
 // {
@@ -64,12 +82,6 @@ int	count_cmds(char *input)
 
 void	quotes_presence(char	*input, char **options)
 {
-	// char	*options[50];
-	// int		i;
-
-	// i = 0;
-	// quote(input, options);
-	(void)options;
-	printf("%d\n", count_cmds(input));
-	//return (options);
+	options = cpy_it(input, options);
+	printf("%s", options[1]);
 }
