@@ -21,6 +21,8 @@ static	void	conditions0(t_minishell *minishell,
 		minishell->exita = 1;
 	else if (!ft_strncmp("pwd", input, 3))
 		printf("%s\n", minishell->current_dir);
+	else if (!ft_strncmp("cd", input, 2))
+		chdir(rm_early_sp(input + 2));
 	else if (f_or_d(input) == 'f')
 		execute(input, envp, minishell, argv);
 	else if (f_or_d(input) == 'd')
@@ -52,4 +54,4 @@ int	main(int c, char **v, char **envp)
 		free(input);
 	}
 	return (0);
-}
+} 

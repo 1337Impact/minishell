@@ -17,7 +17,7 @@ void	execute(char *input, char **envp, t_minishell *minishell, char **argv)
 	(void)minishell;
 	if (!fork())
 	{
-		if (execve(input, argv, envp) == -1)
+		if (execve(input, argv, envp) == -1) 
 			perror("error ");
 	}
 	else
