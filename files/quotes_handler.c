@@ -6,7 +6,7 @@
 /*   By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 15:29:23 by tnamir            #+#    #+#             */
-/*   Updated: 2022/03/21 20:35:33 by tnamir           ###   ########.fr       */
+/*   Updated: 2022/03/21 21:07:56 by tnamir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,8 @@ static	char	**cpy_it(char	*input, char **options)
 // 	return ;
 // }
 
-void	quotes_presence(char	*input, char **options)
+char	**quotes_presence(char	*input, char **options)
 {
 	options = cpy_it(input, options);
-	printf("%s", options[1]);
+	return (options);
 }

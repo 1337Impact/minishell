@@ -6,7 +6,7 @@
 /*   By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:32:40 by tnamir            #+#    #+#             */
-/*   Updated: 2022/03/21 18:08:00 by tnamir           ###   ########.fr       */
+/*   Updated: 2022/03/21 21:07:01 by tnamir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,6 @@ void	execute(char *input, char **envp, t_minishell *minishell, char	**argv);
 char	f_or_d(char *input);
 char	*rm_late_sp(char	*s);
 char	*rm_early_sp(char	*s);
-void	quotes_presence(char	*input, char **options);
+char	**quotes_presence(char	*input, char **options);
 
 #endif

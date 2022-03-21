@@ -9,5 +9,5 @@ int main(int argc, char **argv, char **envp)
 	// v[1] = "/Users/tnamir";
 	// v[2] = NULL;
 	// execve("/bin/ls", v, envp);
-	printf("%s\n", ft_substr("hello world", 0, 3));
+	printf("hello world");
 }
