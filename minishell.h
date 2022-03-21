@@ -38,6 +38,6 @@ void	execute(char *input, char **envp, t_minishell *minishell, char	**argv);
 char	f_or_d(char *input);
 char	*rm_late_sp(char	*s);
 char	*rm_early_sp(char	*s);
-void	quotes_presence(char	*input);
+void	quotes_presence(char	*input, char **options);
 
 #endif

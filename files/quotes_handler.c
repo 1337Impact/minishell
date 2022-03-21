@@ -12,39 +12,64 @@
 
 #include "../minishell.h"
 
-static	int	cpy_till_char(char	*input, char c)
+int	count_cmds(char *input)
 {
-	int	x;
+	int i;
+	int	counter;
 
-	x = -1;
-	while (input[++x] != c)
-		;
-	return (x);
-}
-
-static void	quote(char	*input, char	**options)
-{
-	int	x;
-	int	y;
-
-	x = -1;
-	y = 0;
-	while (input[++x])
+	i = -1;
+	counter = 0;
+	while (input[++i])
 	{
-		if (input[x] == '\'')
-			;
-		printf("%s\n", ft_substr(options[y], x, cpy_till_char(input, ' ')));
-		y++;
+		if (input[i] == ' ')
+			counter++;
+		while (input[i] == ' ')
+			i++;
+		if (input[i] == '\'' || input[i] == '\"')
+		{
+			i++;
+			while (input[i] != '\'' && input[i] != '\"')
+				i++;
+		}
 	}
-	return ;
+	return (++counter);
 }
 
-void	quotes_presence(char	*input)
-{
-	char	*options[50];
-	int		i;
+// static	int	cpy_till_char(char	*input, char c)
+// {
+// 	int	x;
 
-	i = 0;
-	quote(input, options);
+// 	x = -1;
+// 	while (input[++x] != c)
+// 		;
+// 	return (x);
+// }
+
+// static void	quote(char	*input, char	**options)
+// {
+// 	int	x;
+// 	int	y;
+
+// 	x = -1;
+// 	y = 0;
+// 	while (input[++x])
+// 	{
+// 		if (input[x] == '\'')
+// 			;
+// 		printf("%s\n", ft_substr(options[y], x, cpy_till_char(input, ' ')));
+// 		y++;
+// 	}
+// 	return ;
+// }
+
+void	quotes_presence(char	*input, char **options)
+{
+	// char	*options[50];
+	// int		i;
+
+	// i = 0;
+	// quote(input, options);
+	(void)options;
+	printf("%d\n", count_cmds(input));
 	//return (options);
 }
