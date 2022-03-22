@@ -6,7 +6,7 @@
 /*   By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:32:40 by tnamir            #+#    #+#             */
-/*   Updated: 2022/03/22 17:24:22 by tnamir           ###   ########.fr       */
+/*   Updated: 2022/03/22 16:44:07 by tnamir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ char	*rm_late_sp(char	*s);
 char	*rm_early_sp(char	*s);
 char	**quotes_presence(char	*input, t_minishell	*minish);
 void	echo(char	**options);
-int		count_cmds(char *input);
-char	*buff_value_changer(char *buff);
+int	count_cmds(char *input);
 
 #endif

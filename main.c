@@ -35,7 +35,7 @@ void	conditions(t_minishell *minishell,
 	{
 		printf("minishell: command not found %s\n", input);
 		minishell->prompt = RED"👹 Minishell ➤\033[0m";
-		printf ("%so\n", minishell->options[0]);
+		// printf ("%so\n", minishell->options[0]);
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 15:29:23 by tnamir            #+#    #+#             */
-/*   Updated: 2022/03/22 17:30:25 by tnamir           ###   ########.fr       */
+/*   Updated: 2022/03/22 16:43:26 by tnamir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,9 @@ char	*quotes_handler(char *str, int type, char **env)
 					str[x - 1] = 0;
 					return (ft_strjoin(str, env[i] + ft_strlen(str + x) + 1));
 				}
+				// return (buff);
 			}
+			return (buff);
 		}
 		buff[i] = str[x];
 		i++;
@@ -120,5 +122,8 @@ char	**quotes_presence(char	*input, t_minishell	*minish)
 			minish->options[i] = quotes_handler(minish->options[i],
 					1, minish->env);
 	}
+	// i = -1;
+	// while (minish->options[++i])
+	// 	printf("%s\n", minish->options[i]);
 	return (minish->options);
 }

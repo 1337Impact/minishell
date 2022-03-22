@@ -20,7 +20,7 @@ void	echo(char	**options)
 		x = 1;
 	else
 		x = 0;
-	while (options[++x + 1])
+	while (options[++x])
 	{
 		ft_putstr_fd(options[x], 1);
 		write(1, " ", 1);

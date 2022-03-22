@@ -6,7 +6,7 @@
 /*   By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 16:41:40 by tnamir            #+#    #+#             */
-/*   Updated: 2022/03/22 17:47:24 by tnamir           ###   ########.fr       */
+/*   Updated: 2022/03/22 16:42:13 by tnamir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,17 +33,4 @@ int	count_cmds(char *input)
 		}
 	}
 	return (++counter);
-}
-
-char	*buff_value_changer(char *buff)
-{
-	int	size;
-
-	size = ft_strlen(buff);
-	if (buff[ft_strlen(buff) - 1] == '\"')
-		buff[ft_strlen(buff) - 1] = 0;
-	size = -1;
-	while (buff[++size] != '$')
-		size++;
-	return (buff);
 }
