@@ -52,16 +52,23 @@ static	char	**cpy_it(char	*input, char **options)
 		start = x;
 		sub_size = 0;
 // if open quote is found skip everythings in between till close quote is found and add that to OPTIONS
-		if (input[x] == '\'' || input[x] == '\"')
+		if (input[x] == '\'')
 		{
 			x++;
-			// start = x; // removing quotes from string
-			while ((input[x] != '\'' && input[x] != '\"') && input[x])
+			while (input[x] != '\'' && input[x])
 			{
 				x++;
 				sub_size++;
 			}
-			// sub_size--;
+		}
+		if (input[x] == '\"')
+		{
+			x++;
+			while (input[x] != '\"' && input[x])
+			{
+				x++;
+				sub_size++;
+			}
 		}
 // if there isn't any space after closing quote it'll be added in the same string
 		if (input[x] != ' ')
@@ -79,8 +86,49 @@ static	char	**cpy_it(char	*input, char **options)
 	return (options);
 }
 
+char	*quotes_handler(char *str, int type)
+{
+// delete quotes from string + handle variales
+	char	*buff;
+	int		i;
+	int		x;
+
+	buff = ft_calloc(ft_strlen(str) + 1, 1);
+	i = 0;
+	x = 0;
+	while(str[x])
+	{
+		if (str[x] == '\'' || str[x] == '\"')
+			x++;
+		if (!str[x])
+			break ;
+		if (str[x] == '$' && type)
+		{
+			//handling variables
+		}
+		buff[i] = str[x];
+		i++;
+		x++;
+	}
+	free (str);
+	return (buff);
+}
+
 char	**quotes_presence(char	*input, char **options)
 {
+	int	i;
+
+	i = -1;
 	options = cpy_it(input, options);
+	// while (options[++i])
+	// 	printf("%s ----  ", options[i]);
+	while (options[++i])
+	{
+		if (ft_strchr(options[i], '\"'))
+			options[i] = quotes_handler(options[i], 1);
+		else if (ft_strchr(options[i], '\''))
+			options[i] = quotes_handler(options[i], 0);
+		printf("%s\n", options[i]);
+	}
 	return (options);
 }
