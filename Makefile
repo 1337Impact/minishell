@@ -6,7 +6,7 @@
 #    By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/15 16:38:27 by tnamir            #+#    #+#              #
-#    Updated: 2022/03/22 16:42:38 by tnamir           ###   ########.fr        #
+#    Updated: 2022/03/22 18:53:47 by tnamir           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,6 +42,9 @@ fclean : clean
 	@rm -rf $(LIBFT) $(NAME)
 
 re : fclean all
+
+c : all clean
+	./minishell
 
 .PHONY : clean fclean re
 
