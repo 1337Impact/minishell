@@ -6,7 +6,7 @@
 /*   By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 15:29:23 by tnamir            #+#    #+#             */
-/*   Updated: 2022/03/22 14:08:55 by tnamir           ###   ########.fr       */
+/*   Updated: 2022/03/22 15:42:22 by tnamir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ static	void	keep_cpying_it(int	*x, int	*sub_size, char *input)
 	if (input[*x] == '\'')
 	{
 		*x += 1;
+		*sub_size += 1;
 		while (input[*x] != '\'' && input[*x])
 		{
 			*x += 1;
@@ -51,6 +52,7 @@ static	void	keep_cpying_it(int	*x, int	*sub_size, char *input)
 	else if (input[*x] == '\"')
 	{
 		*x += 1;
+		*sub_size += 1;
 		while (input[*x] != '\"' && input[*x])
 		{
 			*x += 1;
@@ -64,7 +66,7 @@ static	void	keep_cpying_it(int	*x, int	*sub_size, char *input)
 	}
 }
 
-//'/bin/l'se
+
 
 static	char	**cpy_it(char	*input, char **options)
 {
@@ -85,7 +87,7 @@ static	char	**cpy_it(char	*input, char **options)
 		keep_cpying_it(&x, &sub_size, input);
 		while (input[x] == ' ')
 			x++;
-		options[y] = ft_substr(input, start, sub_size + 1);
+		options[y] = ft_substr(input, start, sub_size);
 	}
 	return (options);
 }
@@ -109,6 +111,7 @@ char	*quotes_handler(char *str, int type)
 		if (str[x] == '$' && type)
 		{
 			//handling variables
+			write(1, "xD\n", 3);
 		}
 		buff[i] = str[x];
 		i++;
@@ -128,11 +131,10 @@ char	**quotes_presence(char	*input, char **options)
 	// 	printf("%s\n", options[i]);
 	while (options[++i])
 	{
-		if (ft_strchr(options[i], '\"'))
-			options[i] = quotes_handler(options[i], 1);
-		else if (ft_strchr(options[i], '\''))
+		if (ft_strchr(options[i], '\''))
 			options[i] = quotes_handler(options[i], 0);
-		printf("%s\n", options[i]);
+		else
+			options[i] = quotes_handler(options[i], 1);
 	}
 	return (options);
 }

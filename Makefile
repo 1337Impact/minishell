@@ -6,7 +6,7 @@
 #    By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/15 16:38:27 by tnamir            #+#    #+#              #
-#    Updated: 2022/03/21 18:03:08 by tnamir           ###   ########.fr        #
+#    Updated: 2022/03/22 15:50:12 by tnamir           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ HEADER = minishell.h
 
 FLAGS = -Wall -Wextra -Werror
 
-SRC = main.c ./files/execute.c ./files/f_or_d.c ./files/sp_remover.c ./files/quotes_handler.c
+SRC = main.c ./files/execute.c ./files/f_or_d.c ./files/sp_remover.c ./files/quotes_handler.c ./files/echo_handler.c
 
 NAME = minishell
 
