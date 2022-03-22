@@ -6,7 +6,7 @@
 /*   By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:30:16 by tnamir            #+#    #+#             */
-/*   Updated: 2022/03/21 21:07:39 by tnamir           ###   ########.fr       */
+/*   Updated: 2022/03/22 14:12:26 by tnamir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,17 @@ static	void	conditions(t_minishell *minishell,
 	}
 }
 
+static int	tab_sp_check(char	*input)
+{
+	int	x;
+
+	x = -1;
+	while (input[++x])
+		if (input[x] != ' ' && input[x] != '\t')
+			return (1);
+	return (0);
+}
+
 int	main(int c, char **v, char **envp)
 {
 	char		*input;
@@ -50,7 +61,7 @@ int	main(int c, char **v, char **envp)
 		input = readline(minishell.prompt);
 		if (!input)
 			break ;
-		if (input[0] == '\0')
+		if (input[0] == '\0' || !tab_sp_check(input))
 			continue ;
 		if (add_history(input))
 			perror("error ");

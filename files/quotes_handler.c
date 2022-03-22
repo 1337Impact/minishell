@@ -6,7 +6,7 @@
 /*   By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 15:29:23 by tnamir            #+#    #+#             */
-/*   Updated: 2022/03/21 21:07:56 by tnamir           ###   ########.fr       */
+/*   Updated: 2022/03/22 14:08:55 by tnamir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,37 @@ int	count_cmds(char *input)
 	return (++counter);
 }
 
+// if open quote is found skip everythings in between till close quote 
+//is found and add that to OPTIONS
+static	void	keep_cpying_it(int	*x, int	*sub_size, char *input)
+{
+	if (input[*x] == '\'')
+	{
+		*x += 1;
+		while (input[*x] != '\'' && input[*x])
+		{
+			*x += 1;
+			*sub_size += 1;
+		}
+	}
+	else if (input[*x] == '\"')
+	{
+		*x += 1;
+		while (input[*x] != '\"' && input[*x])
+		{
+			*x += 1;
+			*sub_size += 1;
+		}
+	}
+	while (input[*x] != ' ' && input[*x])
+	{
+		*x += 1;
+		*sub_size += 1;
+	}
+}
+
+//'/bin/l'se
+
 static	char	**cpy_it(char	*input, char **options)
 {
 	int	x;
@@ -51,44 +82,17 @@ static	char	**cpy_it(char	*input, char **options)
 	{
 		start = x;
 		sub_size = 0;
-// if open quote is found skip everythings in between till close quote is found and add that to OPTIONS
-		if (input[x] == '\'')
-		{
-			x++;
-			while (input[x] != '\'' && input[x])
-			{
-				x++;
-				sub_size++;
-			}
-		}
-		if (input[x] == '\"')
-		{
-			x++;
-			while (input[x] != '\"' && input[x])
-			{
-				x++;
-				sub_size++;
-			}
-		}
-// if there isn't any space after closing quote it'll be added in the same string
-		if (input[x] != ' ')
-		{
-			while (input[x] != ' ' && input[x])
-			{
-				x++;
-				sub_size++;
-			}
-		}
+		keep_cpying_it(&x, &sub_size, input);
 		while (input[x] == ' ')
 			x++;
-		options[y] = ft_substr(input, start, sub_size);
+		options[y] = ft_substr(input, start, sub_size + 1);
 	}
 	return (options);
 }
 
+// delete quotes from string + handle variales
 char	*quotes_handler(char *str, int type)
 {
-// delete quotes from string + handle variales
 	char	*buff;
 	int		i;
 	int		x;
@@ -96,7 +100,7 @@ char	*quotes_handler(char *str, int type)
 	buff = ft_calloc(ft_strlen(str) + 1, 1);
 	i = 0;
 	x = 0;
-	while(str[x])
+	while (str[x])
 	{
 		if (str[x] == '\'' || str[x] == '\"')
 			x++;
@@ -121,7 +125,7 @@ char	**quotes_presence(char	*input, char **options)
 	i = -1;
 	options = cpy_it(input, options);
 	// while (options[++i])
-	// 	printf("%s ----  ", options[i]);
+	// 	printf("%s\n", options[i]);
 	while (options[++i])
 	{
 		if (ft_strchr(options[i], '\"'))
