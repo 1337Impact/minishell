@@ -6,7 +6,7 @@
 /*   By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:30:16 by tnamir            #+#    #+#             */
-/*   Updated: 2022/03/22 15:50:57 by tnamir           ###   ########.fr       */
+/*   Updated: 2022/03/22 16:34:27 by tnamir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	conditions(t_minishell *minishell,
 {
 	(void)envp;
 	input = rm_early_sp(rm_late_sp(input));
-	minishell->options = quotes_presence(input, minishell->options);
+	minishell->options = quotes_presence(input, minishell);
 	minishell->prompt = CYAN"💀 Minishell ➤\033[0m";
 	if (!ft_strncmp(minishell->options[0], "exit", 5))
 		minishell->exita = 1;
@@ -35,6 +35,7 @@ void	conditions(t_minishell *minishell,
 	{
 		printf("minishell: command not found %s\n", input);
 		minishell->prompt = RED"👹 Minishell ➤\033[0m";
+		printf ("%so\n", minishell->options[0]);
 	}
 }
 
@@ -56,6 +57,7 @@ int	main(int c, char **v, char **envp)
 
 	(void)c;
 	(void)v;
+	minishell.env = envp;
 	minishell.prompt = CYAN"💀 Minishell ➤\033[0m";
 	while (!minishell.exita)
 	{

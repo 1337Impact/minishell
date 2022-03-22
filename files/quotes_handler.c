@@ -6,37 +6,12 @@
 /*   By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 15:29:23 by tnamir            #+#    #+#             */
-/*   Updated: 2022/03/22 15:42:22 by tnamir           ###   ########.fr       */
+/*   Updated: 2022/03/22 16:43:26 by tnamir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	count_cmds(char *input)
-{
-	int	i;
-	int	counter;
-
-	i = -1;
-	counter = 0;
-	while (input[++i])
-	{
-		if (input[i] == ' ')
-			counter++;
-		while (input[i] == ' ')
-			i++;
-		if (input[i] == '\'' || input[i] == '\"')
-		{
-			i++;
-			while ((input[i] != '\'' && input[i] != '\"') && input[i])
-				i++;
-		}
-	}
-	return (++counter);
-}
-
-// if open quote is found skip everythings in between till close quote 
-//is found and add that to OPTIONS
 static	void	keep_cpying_it(int	*x, int	*sub_size, char *input)
 {
 	if (input[*x] == '\'')
@@ -66,9 +41,7 @@ static	void	keep_cpying_it(int	*x, int	*sub_size, char *input)
 	}
 }
 
-
-
-static	char	**cpy_it(char	*input, char **options)
+static	char	**cpy_it(char	*input, char	**options)
 {
 	int	x;
 	int	y;
@@ -92,12 +65,13 @@ static	char	**cpy_it(char	*input, char **options)
 	return (options);
 }
 
-// delete quotes from string + handle variales
-char	*quotes_handler(char *str, int type)
+
+char	*quotes_handler(char *str, int type, char **env)
 {
 	char	*buff;
 	int		i;
 	int		x;
+	int		env_size;
 
 	buff = ft_calloc(ft_strlen(str) + 1, 1);
 	i = 0;
@@ -110,8 +84,18 @@ char	*quotes_handler(char *str, int type)
 			break ;
 		if (str[x] == '$' && type)
 		{
-			//handling variables
-			write(1, "xD\n", 3);
+			x++;
+			i = -1;
+			env_size = twod_array_len(env);
+			while (++i < env_size)
+			{
+				if (!ft_strncmp(env[i], str + x, ft_strlen(str + x))
+						&& env[i][ft_strlen(str + x)] == '=')
+				{
+					str[x - 1] = 0;
+					return (ft_strjoin(str, env[i] + ft_strlen(str + x) + 1));
+				}
+			}
 		}
 		buff[i] = str[x];
 		i++;
@@ -121,20 +105,20 @@ char	*quotes_handler(char *str, int type)
 	return (buff);
 }
 
-char	**quotes_presence(char	*input, char **options)
+char	**quotes_presence(char	*input, t_minishell	*minish)
 {
 	int	i;
 
 	i = -1;
-	options = cpy_it(input, options);
-	// while (options[++i])
-	// 	printf("%s\n", options[i]);
-	while (options[++i])
+	minish->options = cpy_it(input, minish->options);
+	while (minish->options[++i])
 	{
-		if (ft_strchr(options[i], '\''))
-			options[i] = quotes_handler(options[i], 0);
+		if (ft_strchr(minish->options[i], '\''))
+			minish->options[i] = quotes_handler(minish->options[i],
+					0, minish->env);
 		else
-			options[i] = quotes_handler(options[i], 1);
+			minish->options[i] = quotes_handler(minish->options[i],
+					1, minish->env);
 	}
-	return (options);
+	return (minish->options);
 }
