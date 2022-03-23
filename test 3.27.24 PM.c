@@ -10,6 +10,6 @@ int main(int argc, char **argv, char **envp)
 	// v[2] = NULL;
 	// execve("/bin/ls", v, envp);
 	// while (1)
-	readline("lol");
+	// readline("lol");
 	// rl_clear_history();
 }

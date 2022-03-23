@@ -25,17 +25,10 @@ int	count_cmds(char *input)
 			counter++;
 		while (input[i] == ' ')
 			i++;
-//(new code) "handling quotes open and close with the same type"
-		if (input[i] == '\"')
+		if (input[i] == '\'' || input[i] == '\"')
 		{
 			i++;
-			while (input[i] != '\"' && input[i])
-				i++;
-		}
-		if (input[i] == '\'')
-		{
-			i++;
-			while (input[i] != '\'' && input[i])
+			while ((input[i] != '\'' && input[i] != '\"') && input[i])
 				i++;
 		}
 	}

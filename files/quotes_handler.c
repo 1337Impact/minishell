@@ -6,11 +6,59 @@
 /*   By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 15:29:23 by tnamir            #+#    #+#             */
-/*   Updated: 2022/03/22 16:43:26 by tnamir           ###   ########.fr       */
+/*   Updated: 2022/03/23 15:38:33 by tnamir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+char	*ft_charjoin(char	*str, char c)
+{
+	char	*p;
+	int		x;
+
+	p = malloc(ft_strlen(str) + 2);
+	x = -1;
+	while(str[++x])
+		p[x] = str[x];
+	p[x++] = c;
+	p[x] = 0;
+	free(str);
+	return (p);
+}
+
+char	*var_value(char	*str, char	**env)
+{
+	int	x;
+
+	x = -1;
+	while (env[++x])
+	{
+		if (!ft_strncmp(env[x], str, ft_strlen(str)) && env[x][ft_strlen(str)] == '=')
+			return (env[x] + ft_strlen(str) + 1);
+	}
+	return (0);
+}
+
+char	*var_name(char	*str, int	*x)
+{
+	int		i;
+	char	*p;
+
+	i = 0;
+	while(str[i] && str[i] != ' ' && str[i] != '\"')
+		i++;
+	p = malloc(i + 1);
+	i = 0;
+	while (str[i] && str[i] != ' ' && str[i] != '\"')
+	{
+		p[i] = str[i];
+		i++;
+		*x += 1;
+	}
+	p[i] = 0;
+	return (p);
+}
 
 static	void	keep_cpying_it(int	*x, int	*sub_size, char *input)
 {
@@ -34,7 +82,7 @@ static	void	keep_cpying_it(int	*x, int	*sub_size, char *input)
 			*sub_size += 1;
 		}
 	}
-	else
+	while (input[*x] != ' ' && input[*x])
 	{
 		*x += 1;
 		*sub_size += 1;
@@ -57,8 +105,7 @@ static	char	**cpy_it(char	*input, char	**options)
 	{
 		start = x;
 		sub_size = 0;
-		while (input[x] != ' ' && input[x])
-			keep_cpying_it(&x, &sub_size, input);
+		keep_cpying_it(&x, &sub_size, input);
 		while (input[x] == ' ')
 			x++;
 		options[y] = ft_substr(input, start, sub_size);
@@ -66,55 +113,45 @@ static	char	**cpy_it(char	*input, char	**options)
 	return (options);
 }
 
-char	*var_handler(char **env, char *str, char *buff, int	*x)
-{
-	int	i;
 
-	*x += 1;
-	i = -1;
-	while (env[++i])
-	{
-		if (!ft_strncmp(env[i], str + *x, ft_strlen(str + *x))
-				&& env[i][ft_strlen(str + *x)] == '=')
-		{
-			str[*x - 1] = 0;
-			return (ft_strjoin(str, env[i] + ft_strlen(str + *x) + 1));
-		}
-	}
-	return (buff);
-}
-
-
-char	*quotes_handler(char *str, char **env)
+char	*quotes_handler(char *str, int type, char **env)
 {
 	char	*buff;
 	int		i;
 	int		x;
+	char	*var;
 
+	(void)type;
 	buff = ft_calloc(ft_strlen(str) + 1, 1);
 	i = 0;
 	x = 0;
 	while (str[x])
 	{
-//(new code) "handling quotes open and close with the same type"
-		if (str[x] == '\'')
-		{
-			x++;
-			while (str[x] != '\'' && str[x])
-				buff[i++] = str[x++];
-			x++;
-		}
 		if (str[x] == '\"')
 		{
 			x++;
-			while (str[x] != '\"' && str[x] != '$' && str[x])
-				buff[i++] = str[x++];
-			if (str[x] == '$')
-				var_handler(env, str, buff, &x);
+			while (str[x] && str[x] != '\"')
+			{
+				if (str[x] == '$')
+				{
+					x++;
+					var = var_value(var_name(str + x, &x), env);
+					if (var)
+						buff = ft_strjoin(buff, var);
+					i = ft_strlen(buff);
+				}
+				else
+					buff[i++] = str[x++];
+			}
 		}
-		buff[i++] = str[x++];
-		if (str[x] == '$')
-			var_handler(env, str, buff, &x);
+		else if (str[x] == '\'')
+		{
+			x++;
+			while (str[x] && str[x] != '\'')
+				buff[i++] = str[x++];
+		}
+		else
+			buff[i++] = str[x++];
 	}
 	free (str);
 	return (buff);
@@ -124,11 +161,16 @@ char	**quotes_presence(char	*input, t_minishell	*minish)
 {
 	int	i;
 
-	minish->options = cpy_it(input, minish->options);
 	i = -1;
+	minish->options = cpy_it(input, minish->options);
 	while (minish->options[++i])
 	{
-		minish->options[i] = quotes_handler(minish->options[i], minish->env);
+		if (ft_strchr(minish->options[i], '\''))
+			minish->options[i] = quotes_handler(minish->options[i],
+					0, minish->env);
+		else
+			minish->options[i] = quotes_handler(minish->options[i],
+					1, minish->env);
 	}
 	// i = -1;
 	// while (minish->options[++i])
