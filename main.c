@@ -6,7 +6,7 @@
 /*   By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:30:16 by tnamir            #+#    #+#             */
-/*   Updated: 2022/03/23 18:33:20 by tnamir           ###   ########.fr       */
+/*   Updated: 2022/03/23 18:40:43 by tnamir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,6 @@ void	conditions(t_minishell *minishell,
 		echo(minishell->options);
 	else if (!ft_strncmp(minishell->options[0], "env", 4))
 		env_print(envp);
-	// else if (f_or_d(minishell->options[0]) == 'f')
-	// 	execute(minishell->options[0], envp, minishell, minishell->options);
 	else if (f_or_d(minishell->options[0]) == 'd')
 		chdir(minishell->options[0]);
 	else
@@ -56,7 +54,6 @@ int	main(int c, char **v, char **envp)
 {
 	char		*input;
 	t_minishell	minishell;
-	int i = 0;
 
 	(void)c;
 	(void)v;
@@ -69,7 +66,7 @@ int	main(int c, char **v, char **envp)
 		input = readline(minishell.prompt);
 		if (!input)
 			break ;
-		if (input[0] == '\0' || !tab_sp_check(input))
+		if (!tab_sp_check(input))
 			continue ;
 		if (add_history(input))
 			perror("error ");

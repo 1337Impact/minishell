@@ -6,7 +6,7 @@
 /*   By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 16:57:23 by tnamir            #+#    #+#             */
-/*   Updated: 2022/03/23 18:06:27 by tnamir           ###   ########.fr       */
+/*   Updated: 2022/03/23 18:37:32 by tnamir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ static char	*var_value(char	*str, char	**env)
 	x = -1;
 	while (env[++x])
 	{
-		if (!ft_strncmp(env[x], str, ft_strlen(str)) && env[x][ft_strlen(str)] == '=')
+		if (!ft_strncmp(env[x], str, ft_strlen(str))
+			&& env[x][ft_strlen(str)] == '=')
 			return (env[x] + ft_strlen(str) + 1);
 	}
 	return (0);
@@ -31,11 +32,13 @@ static char	*var_name(char	*str, int	*x)
 	char	*p;
 
 	i = 0;
-	while (str[i] && str[i] != ' ' && str[i] != '\"' && str[i] != '$' && str[i] != '/')
+	while (str[i] && str[i] != ' ' && str[i] != '\"'
+		&& str[i] != '$' && str[i] != '/')
 		i++;
 	p = malloc(i + 1);
 	i = 0;
-	while (str[i] && str[i] != ' ' && str[i] != '\"' && str[i] != '$' && str[i] != '/')
+	while (str[i] && str[i] != ' ' && str[i] != '\"'
+		&& str[i] != '$' && str[i] != '/')
 	{
 		p[i] = str[i];
 		i++;

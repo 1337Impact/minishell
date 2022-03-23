@@ -6,7 +6,7 @@
 /*   By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:32:40 by tnamir            #+#    #+#             */
-/*   Updated: 2022/03/23 17:59:34 by tnamir           ###   ########.fr       */
+/*   Updated: 2022/03/23 18:39:44 by tnamir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 # include <sys/types.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-#include <errno.h>
+# include <errno.h>
 
 typedef struct s_minishell
 {
@@ -46,5 +46,6 @@ void	echo(char	**options);
 int		count_cmds(char *input);
 char	*var_handler(char *buff, char *str, t_minishell *minish, int *x);
 void	env_print(char	**env);
+char	**cpy_it(char	*input, char	**options);
 
 #endif

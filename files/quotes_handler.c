@@ -6,7 +6,7 @@
 /*   By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 15:29:23 by tnamir            #+#    #+#             */
-/*   Updated: 2022/03/23 17:51:01 by tnamir           ###   ########.fr       */
+/*   Updated: 2022/03/23 19:00:25 by tnamir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*ft_charjoin(char	*str, char c)
 
 	p = malloc(ft_strlen(str) + 2);
 	x = -1;
-	while(str[++x])
+	while (str[++x])
 		p[x] = str[x];
 	p[x++] = c;
 	p[x] = 0;
@@ -27,59 +27,21 @@ char	*ft_charjoin(char	*str, char c)
 	return (p);
 }
 
-static	void	keep_cpying_it(int	*x, int	*sub_size, char *input)
+static void	keep_handling(char *str, t_minishell *minish, char *buff, int *x)
 {
-	if (input[*x] == '\'')
+	*x += 1;
+	while (str[*x] && str[*x] != '\"')
 	{
-		*x += 1;
-		*sub_size += 1;
-		while (input[*x] != '\'' && input[*x])
+		if (str[*x] == '$')
+			buff = var_handler(buff, str, minish, x);
+		else
 		{
+			buff = ft_charjoin(buff, str[*x]);
 			*x += 1;
-			*sub_size += 1;
 		}
 	}
-	else if (input[*x] == '\"')
-	{
-		*x += 1;
-		*sub_size += 1;
-		while (input[*x] != '\"' && input[*x])
-		{
-			*x += 1;
-			*sub_size += 1;
-		}
-	}
-	while (input[*x] != ' ' && input[*x])
-	{
-		*x += 1;
-		*sub_size += 1;
-	}
+	x++;
 }
-
-static	char	**cpy_it(char	*input, char	**options)
-{
-	int	x;
-	int	y;
-	int	size;
-	int	sub_size;
-	int	start;
-
-	size = count_cmds(input);
-	options = ft_calloc(size + 1, sizeof(char *));
-	x = 0;
-	y = -1;
-	while (++y < size)
-	{
-		start = x;
-		sub_size = 0;
-		keep_cpying_it(&x, &sub_size, input);
-		while (input[x] == ' ')
-			x++;
-		options[y] = ft_substr(input, start, sub_size);
-	}
-	return (options);
-}
-
 
 char	*quotes_handler(char *str, t_minishell *minish)
 {
@@ -93,17 +55,7 @@ char	*quotes_handler(char *str, t_minishell *minish)
 		if (str[x] == '$')
 			buff = var_handler(buff, str, minish, &x);
 		else if (str[x] == '\"')
-		{
-			x++;
-			while (str[x] && str[x] != '\"')
-			{
-				if (str[x] == '$')
-					buff = var_handler(buff, str, minish, &x);
-				else
-					buff = ft_charjoin(buff, str[x++]);
-			}
-			x++;
-		}
+			keep_handling(str, minish, buff, &x);
 		else if (str[x] == '\'')
 		{
 			x++;

@@ -6,7 +6,7 @@
 /*   By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 15:43:00 by tnamir            #+#    #+#             */
-/*   Updated: 2022/03/23 17:22:40 by tnamir           ###   ########.fr       */
+/*   Updated: 2022/03/23 18:38:05 by tnamir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	echo(char	**options)
 {
 	int	x;
+
 	if (options[0])
 	{
 		if (!ft_strncmp(options[1], "-n", 3))
