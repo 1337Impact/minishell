@@ -34,7 +34,7 @@ static	void	keep_cpying_it(int	*x, int	*sub_size, char *input)
 			*sub_size += 1;
 		}
 	}
-	while (input[*x] != ' ' && input[*x])
+	else
 	{
 		*x += 1;
 		*sub_size += 1;
@@ -57,7 +57,8 @@ static	char	**cpy_it(char	*input, char	**options)
 	{
 		start = x;
 		sub_size = 0;
-		keep_cpying_it(&x, &sub_size, input);
+		while (input[x] != ' ' && input[x])
+			keep_cpying_it(&x, &sub_size, input);
 		while (input[x] == ' ')
 			x++;
 		options[y] = ft_substr(input, start, sub_size);
@@ -65,43 +66,55 @@ static	char	**cpy_it(char	*input, char	**options)
 	return (options);
 }
 
+char	*var_handler(char **env, char *str, char *buff, int	*x)
+{
+	int	i;
 
-char	*quotes_handler(char *str, int type, char **env)
+	*x += 1;
+	i = -1;
+	while (env[++i])
+	{
+		if (!ft_strncmp(env[i], str + *x, ft_strlen(str + *x))
+				&& env[i][ft_strlen(str + *x)] == '=')
+		{
+			str[*x - 1] = 0;
+			return (ft_strjoin(str, env[i] + ft_strlen(str + *x) + 1));
+		}
+	}
+	return (buff);
+}
+
+
+char	*quotes_handler(char *str, char **env)
 {
 	char	*buff;
 	int		i;
 	int		x;
-	int		env_size;
 
 	buff = ft_calloc(ft_strlen(str) + 1, 1);
 	i = 0;
 	x = 0;
 	while (str[x])
 	{
-		if (str[x] == '\'' || str[x] == '\"')
-			x++;
-		if (!str[x])
-			break ;
-		if (str[x] == '$' && type)
+//(new code) "handling quotes open and close with the same type"
+		if (str[x] == '\'')
 		{
 			x++;
-			i = -1;
-			env_size = twod_array_len(env);
-			while (++i < env_size)
-			{
-				if (!ft_strncmp(env[i], str + x, ft_strlen(str + x))
-						&& env[i][ft_strlen(str + x)] == '=')
-				{
-					str[x - 1] = 0;
-					return (ft_strjoin(str, env[i] + ft_strlen(str + x) + 1));
-				}
-				// return (buff);
-			}
-			return (buff);
+			while (str[x] != '\'' && str[x])
+				buff[i++] = str[x++];
+			x++;
 		}
-		buff[i] = str[x];
-		i++;
-		x++;
+		if (str[x] == '\"')
+		{
+			x++;
+			while (str[x] != '\"' && str[x] != '$' && str[x])
+				buff[i++] = str[x++];
+			if (str[x] == '$')
+				var_handler(env, str, buff, &x);
+		}
+		buff[i++] = str[x++];
+		if (str[x] == '$')
+			var_handler(env, str, buff, &x);
 	}
 	free (str);
 	return (buff);
@@ -111,16 +124,11 @@ char	**quotes_presence(char	*input, t_minishell	*minish)
 {
 	int	i;
 
-	i = -1;
 	minish->options = cpy_it(input, minish->options);
+	i = -1;
 	while (minish->options[++i])
 	{
-		if (ft_strchr(minish->options[i], '\''))
-			minish->options[i] = quotes_handler(minish->options[i],
-					0, minish->env);
-		else
-			minish->options[i] = quotes_handler(minish->options[i],
-					1, minish->env);
+		minish->options[i] = quotes_handler(minish->options[i], minish->env);
 	}
 	// i = -1;
 	// while (minish->options[++i])
