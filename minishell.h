@@ -6,7 +6,7 @@
 /*   By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:32:40 by tnamir            #+#    #+#             */
-/*   Updated: 2022/03/22 16:44:07 by tnamir           ###   ########.fr       */
+/*   Updated: 2022/03/23 17:59:34 by tnamir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # include <sys/types.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+#include <errno.h>
 
 typedef struct s_minishell
 {
@@ -33,6 +34,7 @@ typedef struct s_minishell
 	char	current_dir[200];
 	char	**options;
 	char	**env;
+	int		exit_status;
 }	t_minishell;
 
 void	execute(char *input, char **envp, t_minishell *minishell, char	**argv);
@@ -41,6 +43,8 @@ char	*rm_late_sp(char	*s);
 char	*rm_early_sp(char	*s);
 char	**quotes_presence(char	*input, t_minishell	*minish);
 void	echo(char	**options);
-int	count_cmds(char *input);
+int		count_cmds(char *input);
+char	*var_handler(char *buff, char *str, t_minishell *minish, int *x);
+void	env_print(char	**env);
 
 #endif
