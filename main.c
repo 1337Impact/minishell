@@ -6,7 +6,7 @@
 /*   By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:30:16 by tnamir            #+#    #+#             */
-/*   Updated: 2022/03/23 18:40:43 by tnamir           ###   ########.fr       */
+/*   Updated: 2022/03/24 17:30:43 by tnamir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,7 @@ void	conditions(t_minishell *minishell,
 	else if (f_or_d(minishell->options[0]) == 'd')
 		cd(minishell->options[0], minishell);
 	else
-	{
 		execute(minishell->options[0], envp, minishell, minishell->options);
-		// if (minishell->exit_status)
-		// 	minishell->prompt = RED"👹 Minishell ➤\033[0m";
-	}
 }
 
 static int	tab_sp_check(char	*input)

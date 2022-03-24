@@ -6,7 +6,7 @@
 /*   By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 16:57:23 by tnamir            #+#    #+#             */
-/*   Updated: 2022/03/23 18:37:32 by tnamir           ###   ########.fr       */
+/*   Updated: 2022/03/24 17:31:37 by tnamir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,12 @@
 
 static char	*var_value(char	*str, char	**env)
 {
-	int	x;
+	int		x;
+	char	*env_name;
 
 	x = -1;
 	(void)env;
-	// while (env[++x])
-	// {
-	// 	if (!ft_strncmp(env[x], str, ft_strlen(str))
-	// 		&& env[x][ft_strlen(str)] == '=')
-	// 		return (env[x] + ft_strlen(str) + 1);
-	// }
-	char *env_name = getenv(str);
+	env_name = getenv(str);
 	return (env_name);
 }
 
