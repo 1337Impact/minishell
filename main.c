@@ -6,7 +6,7 @@
 /*   By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:30:16 by tnamir            #+#    #+#             */
-/*   Updated: 2022/03/24 17:30:43 by tnamir           ###   ########.fr       */
+/*   Updated: 2022/03/24 18:43:35 by tnamir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ void	conditions(t_minishell *minishell,
 		env(envp, minishell);
 	else if (f_or_d(minishell->options[0]) == 'd')
 		cd(minishell->options[0], minishell);
+	else if (!ft_strncmp(minishell->options[0], "export", 7))
+		export(minishell, minishell->options[1]);
 	else
 		execute(minishell->options[0], envp, minishell, minishell->options);
 }
@@ -57,6 +59,7 @@ int	main(int c, char **v, char **envp)
 	(void)c;
 	(void)v;
 	minishell.env = envp;
+	minishell.new_env = envp;
 	minishell.prompt = CYAN"💀 Minishell ➤\033[0m";
 	minishell.exit_status = 0;
 	while (!minishell.exita)
