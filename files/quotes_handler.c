@@ -35,7 +35,10 @@ char	*keep_handling(char *str, t_minishell *minish, char *buff, int *x)
 		if (str[*x] == '$')
 			buff = var_handler(buff, str, minish, x);
 		else
+		{
 			buff = ft_charjoin(buff, str[*x]);
+			*x += 1;
+		}
 	}
 	*x += 1;
 	return (buff);

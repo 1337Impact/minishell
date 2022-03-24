@@ -17,13 +17,15 @@ static char	*var_value(char	*str, char	**env)
 	int	x;
 
 	x = -1;
-	while (env[++x])
-	{
-		if (!ft_strncmp(env[x], str, ft_strlen(str))
-			&& env[x][ft_strlen(str)] == '=')
-			return (env[x] + ft_strlen(str) + 1);
-	}
-	return (0);
+	(void)env;
+	// while (env[++x])
+	// {
+	// 	if (!ft_strncmp(env[x], str, ft_strlen(str))
+	// 		&& env[x][ft_strlen(str)] == '=')
+	// 		return (env[x] + ft_strlen(str) + 1);
+	// }
+	char *env_name = getenv(str);
+	return (env_name);
 }
 
 static char	*var_name(char	*str, int	*x)
@@ -53,9 +55,7 @@ char	*var_handler(char *buff, char *str, t_minishell *minish, int *x)
 	char	*var;
 
 	*x += 1;
-// handling error (echo $) and (echo $"HOME")
-	if (str[*x] == '\'' || str[*x] == '\"'
-		|| str[*x] == ' ' || !str[*x])
+	if (str[*x] == '\'' || str[*x] == '\"' || str[*x] == ' ' || !str[*x])
 		buff = ft_charjoin(buff, '$');
 	else if (str[*x] == '?')
 	{
@@ -69,13 +69,4 @@ char	*var_handler(char *buff, char *str, t_minishell *minish, int *x)
 			buff = ft_strjoin(buff, var);
 	}
 	return (buff);
-}
-
-void	env_print(char	**env)
-{
-	int	i;
-
-	i = -1;
-	while (env[++i])
-		ft_putendl_fd(env[i], 1);
 }

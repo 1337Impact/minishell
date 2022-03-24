@@ -42,11 +42,14 @@ char	f_or_d(char *input);
 char	*rm_late_sp(char	*s);
 char	*rm_early_sp(char	*s);
 char	**quotes_presence(char	*input, t_minishell	*minish);
-void	echo(char	**options);
 int		count_cmds(char *input);
 char	*var_handler(char *buff, char *str, t_minishell *minish, int *x);
-void	env_print(char	**env);
 char	**cpy_it(char	*input, char	**options);
 char	*ft_charjoin(char	*str, char c);
+
+// builtins commands
+void	env(char	**env, t_minishell *minish);
+void	echo(char	**options, t_minishell *minish);
+void	cd(char *path, t_minishell *minish);
 
 #endif

@@ -22,20 +22,23 @@ void	conditions(t_minishell *minishell,
 	if (!ft_strncmp(minishell->options[0], "exit", 5))
 		minishell->exita = 1;
 	else if (!ft_strncmp(minishell->options[0], "pwd", 4))
+	{
 		printf("%s\n", minishell->current_dir);
+		minishell->exit_status = 0;
+	}
 	else if (!ft_strncmp(minishell->options[0], "cd", 3))
-		chdir(minishell->options[1]);
+		cd(minishell->options[1], minishell);
 	else if (!ft_strncmp(minishell->options[0], "echo", 5))
-		echo(minishell->options);
+		echo(minishell->options, minishell);
 	else if (!ft_strncmp(minishell->options[0], "env", 4))
-		env_print(envp);
+		env(envp, minishell);
 	else if (f_or_d(minishell->options[0]) == 'd')
-		chdir(minishell->options[0]);
+		cd(minishell->options[0], minishell);
 	else
 	{
 		execute(minishell->options[0], envp, minishell, minishell->options);
-		if (minishell->exit_status)
-			minishell->prompt = RED"👹 Minishell ➤\033[0m";
+		// if (minishell->exit_status)
+		// 	minishell->prompt = RED"👹 Minishell ➤\033[0m";
 	}
 }
 
@@ -63,6 +66,8 @@ int	main(int c, char **v, char **envp)
 	while (!minishell.exita)
 	{
 		getcwd(minishell.current_dir, 200);
+		if (minishell.exit_status)
+			minishell.prompt = RED"👹 Minishell ➤\033[0m";
 		input = readline(minishell.prompt);
 		if (!input)
 			break ;

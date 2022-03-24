@@ -16,7 +16,7 @@ HEADER = minishell.h
 
 FLAGS = -Wall -Wextra -Werror
 
-SRC = main.c ./files/execute.c ./files/f_or_d.c ./files/sp_remover.c ./files/quotes_handler.c ./files/echo_handler.c ./files/utils.c ./files/env_var.c ./files/cpy.c
+SRC = main.c ./files/execute.c ./files/f_or_d.c ./files/sp_remover.c ./files/quotes_handler.c ./files/builtins_cmds.c ./files/utils.c ./files/env_var.c ./files/cpy.c
 
 NAME = minishell
 

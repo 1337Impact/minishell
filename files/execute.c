@@ -22,6 +22,8 @@ void	execute(char *input, char **envp, t_minishell *minishell, char **argv)
 			minishell->exit_status = errno;
 			perror("error ");
 		}
+		else 
+			minishell->exit_status = 0;
 	}
 	else
 		wait(NULL);
