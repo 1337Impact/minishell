@@ -47,5 +47,6 @@ int		count_cmds(char *input);
 char	*var_handler(char *buff, char *str, t_minishell *minish, int *x);
 void	env_print(char	**env);
 char	**cpy_it(char	*input, char	**options);
+char	*ft_charjoin(char	*str, char c);
 
 #endif

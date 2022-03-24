@@ -5,7 +5,7 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/21 15:29:23 by tnamir            #+#    #+#             */
+/*   Created: 2022/03/21 15:29:23 by tnamir            #+#    #+ddddddssss#             */
 /*   Updated: 2022/03/23 19:00:25 by tnamir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -27,7 +27,7 @@ char	*ft_charjoin(char	*str, char c)
 	return (p);
 }
 
-static void	keep_handling(char *str, t_minishell *minish, char *buff, int *x)
+char	*keep_handling(char *str, t_minishell *minish, char *buff, int *x)
 {
 	*x += 1;
 	while (str[*x] && str[*x] != '\"')
@@ -35,12 +35,10 @@ static void	keep_handling(char *str, t_minishell *minish, char *buff, int *x)
 		if (str[*x] == '$')
 			buff = var_handler(buff, str, minish, x);
 		else
-		{
 			buff = ft_charjoin(buff, str[*x]);
-			*x += 1;
-		}
 	}
-	x++;
+	*x += 1;
+	return (buff);
 }
 
 char	*quotes_handler(char *str, t_minishell *minish)
@@ -55,7 +53,7 @@ char	*quotes_handler(char *str, t_minishell *minish)
 		if (str[x] == '$')
 			buff = var_handler(buff, str, minish, &x);
 		else if (str[x] == '\"')
-			keep_handling(str, minish, buff, &x);
+			buff = keep_handling(str, minish, buff, &x);
 		else if (str[x] == '\'')
 		{
 			x++;

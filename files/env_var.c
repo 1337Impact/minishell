@@ -53,7 +53,11 @@ char	*var_handler(char *buff, char *str, t_minishell *minish, int *x)
 	char	*var;
 
 	*x += 1;
-	if (str[*x] == '?')
+// handling error (echo $) and (echo $"HOME")
+	if (str[*x] == '\'' || str[*x] == '\"'
+		|| str[*x] == ' ' || !str[*x])
+		buff = ft_charjoin(buff, '$');
+	else if (str[*x] == '?')
 	{
 		buff = ft_strjoin(buff, ft_itoa(minish->exit_status));
 		*x += 1;
