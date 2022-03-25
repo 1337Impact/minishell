@@ -6,7 +6,7 @@
 /*   By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:32:40 by tnamir            #+#    #+#             */
-/*   Updated: 2022/03/23 18:39:44 by tnamir           ###   ########.fr       */
+/*   Updated: 2022/03/24 18:42:02 by tnamir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ typedef struct s_minishell
 	char	current_dir[200];
 	char	**options;
 	char	**env;
+	char	**new_env;
 	int		exit_status;
 }	t_minishell;
 
@@ -51,5 +52,6 @@ char	*ft_charjoin(char	*str, char c);
 void	env(char	**env, t_minishell *minish);
 void	echo(char	**options, t_minishell *minish);
 void	cd(char *path, t_minishell *minish);
+void	export(t_minishell *minish, char *new_var);
 
 #endif
