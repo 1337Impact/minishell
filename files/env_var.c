@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_var.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: mbenkhat <mbenkhat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 16:57:23 by tnamir            #+#    #+#             */
-/*   Updated: 2022/03/24 17:31:37 by tnamir           ###   ########.fr       */
+/*   Updated: 2022/03/25 12:42:09 by mbenkhat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,16 @@
 static char	*var_value(char	*str, char	**env)
 {
 	int		x;
-	char	*env_name;
+	int		len;
 
 	x = -1;
-	(void)env;
-<<<<<<< HEAD
-	char *env_name = getenv(str);
-=======
-	env_name = getenv(str);
->>>>>>> 6d89fb204778fdc4b410b55d4bb83b3cb5afc66b
-	return (env_name);
+	len = ft_strlen(str);
+	while (env[++x])
+	{
+		if (!ft_strncmp(env[x], str, len) && env[x][len] == '=')
+			return (env[x] + len + 1);
+	}
+	return (0);
 }
 
 static char	*var_name(char	*str, int	*x)
@@ -63,7 +63,7 @@ char	*var_handler(char *buff, char *str, t_minishell *minish, int *x)
 	}
 	else
 	{
-		var = var_value(var_name(str + *x, x), minish->env);
+		var = var_value(var_name(str + *x, x), minish->local_env);
 		if (var)
 			buff = ft_strjoin(buff, var);
 	}

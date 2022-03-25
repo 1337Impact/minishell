@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+         #
+#    By: mbenkhat <mbenkhat@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/15 16:38:27 by tnamir            #+#    #+#              #
-#    Updated: 2022/03/24 18:56:03 by tnamir           ###   ########.fr        #
+#    Updated: 2022/03/25 13:43:12 by mbenkhat         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ HEADER = minishell.h
 
 FLAGS = -Wall -Wextra -Werror
 
-SRC = main.c ./files/execute.c ./files/f_or_d.c ./files/sp_remover.c ./files/quotes_handler.c ./files/builtins_cmds.c ./files/utils.c ./files/env_var.c ./files/cpy.c ./files/export.c
+SRC = main.c ./files/execute.c ./files/f_or_d.c ./files/sp_remover.c ./files/quotes_handler.c ./files/builtins_cmds.c ./files/utils.c ./files/env_var.c ./files/cpy.c ./files/unset_export.c
 
 NAME = minishell
 

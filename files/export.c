@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: mbenkhat <mbenkhat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 18:55:01 by tnamir            #+#    #+#             */
-/*   Updated: 2022/03/24 20:09:03 by tnamir           ###   ########.fr       */
+/*   Updated: 2022/03/25 11:30:29 by mbenkhat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,3 +84,4 @@ void	export(t_minishell *minish, char *new_var)
 			ft_putendl_fd(minish->new_env[x], 1);
 	}
 }
+
