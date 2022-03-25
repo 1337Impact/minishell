@@ -18,12 +18,6 @@ static char	*var_value(char	*str, char	**env)
 
 	x = -1;
 	(void)env;
-	// while (env[++x])
-	// {
-	// 	if (!ft_strncmp(env[x], str, ft_strlen(str))
-	// 		&& env[x][ft_strlen(str)] == '=')
-	// 		return (env[x] + ft_strlen(str) + 1);
-	// }
 	char *env_name = getenv(str);
 	return (env_name);
 }
