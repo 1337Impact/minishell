@@ -6,7 +6,7 @@
 /*   By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:30:16 by tnamir            #+#    #+#             */
-/*   Updated: 2022/03/26 12:53:36 by tnamir           ###   ########.fr       */
+/*   Updated: 2022/03/26 13:06:56 by tnamir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static void	more_conditions(t_minishell *minishell, char **envp)
 	}
 }
 
-static void	conditions(t_minishell *minishell,
+void	conditions(t_minishell *minishell,
 	char	*input, char **envp)
 {
 	(void)envp;
@@ -61,8 +61,10 @@ static void	conditions(t_minishell *minishell,
 		more_conditions(minishell, envp);
 }
 
-static void	wanna_be_main(t_minishell *minishell, char *input, char	**envp)
+static void	wanna_be_main(t_minishell *minishell, char	**envp)
 {
+	char	*input;
+
 	while (!minishell->exita)
 	{
 		getcwd(minishell->current_dir, 200);
@@ -75,6 +77,7 @@ static void	wanna_be_main(t_minishell *minishell, char *input, char	**envp)
 			continue ;
 		if (add_history(input))
 			perror("error ");
+		pipe_hand(minishell, input);
 		conditions(minishell, input, envp);
 		free(input);
 	}
@@ -82,13 +85,11 @@ static void	wanna_be_main(t_minishell *minishell, char *input, char	**envp)
 
 int	main(int c, char **v, char **envp)
 {
-	char		*input;
 	t_minishell	minishell;
 	int			i;
 
 	(void)c;
 	(void)v;
-	input = NULL;
 	minishell.local_env = malloc((twod_array_len(envp) + 1) * sizeof(char *));
 	i = -1;
 	while (envp[++i])
@@ -96,6 +97,6 @@ int	main(int c, char **v, char **envp)
 	minishell.local_env[i] = 0;
 	minishell.prompt = CYAN"💀 Minishell ➤\033[0m";
 	minishell.exit_status = 0;
-	wanna_be_main(&minishell, input, envp);
+	wanna_be_main(&minishell, envp);
 	return (0);
 }
