@@ -6,7 +6,7 @@
 /*   By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 11:29:51 by mbenkhat          #+#    #+#             */
-/*   Updated: 2022/03/26 12:21:09 by tnamir           ###   ########.fr       */
+/*   Updated: 2022/03/26 12:29:41 by tnamir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ char	**unset_var(char *var_name, char **local_env)
 	len = ft_strlen(var_name);
 	while (local_env[i])
 	{
-		if (!ft_strncmp(local_env[i], var_name, len) && local_env[i][len] == '=')
+		if (!ft_strncmp(local_env[i], var_name, len)
+			&& local_env[i][len] == '=')
 			free(local_env[i++]);
 		new_env[x] = local_env[i];
 		i++;
@@ -58,7 +59,7 @@ static int	valid_var_name(char	*var, t_minishell *minish)
 	x = -1;
 	while (var[++x])
 	{
-		if(!ft_isalnum(var[x]) || var[x] == '_')
+		if (!ft_isalnum(var[x]) || var[x] == '_')
 		{
 			printf("unset: %s: invalid parameter name\n", var);
 			minish->exit_status = 1;
@@ -91,5 +92,5 @@ char	**unset(char **local_env, t_minishell *minish)
 		local_env = unset_var(minish->options[y], local_env);
 	}
 	minish->exit_status = 0;
-	return	(local_env);
+	return (local_env);
 }

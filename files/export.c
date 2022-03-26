@@ -6,15 +6,16 @@
 /*   By: mbenkhat <mbenkhat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 12:05:27 by tnamir            #+#    #+#             */
-/*   Updated: 2022/03/26 12:37:12 by mbenkhat         ###   ########.fr       */
+/*   Updated: 2022/03/26 13:25:03 by mbenkhat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "../minishell.h"
 
 static char	*var_name_func(char *var)
 {
-	int	i;
+	int		i;
 	char	*var_name;
 
 	i = 0;
@@ -35,7 +36,7 @@ static int	valid_var_name(char	*var, t_minishell *minish)
 	x = -1;
 	while (var[++x])
 	{
-		if(!ft_isalnum(var[x]) && var[x] != '_' && var[x] != '=')
+		if (!ft_isalnum(var[x]) && var[x] != '_' && var[x] != '=')
 		{
 			printf("export: not valid in this context: %s\n", var);
 			minish->exit_status = 1;
@@ -45,14 +46,11 @@ static int	valid_var_name(char	*var, t_minishell *minish)
 	return (0);
 }
 
-char	**export(char	**local_env, t_minishell *minish)
+static char	**export_check(t_minishell *minish, char **local_env)
 {
-	int		x;
 	int		y;
-	char	**new_env;
 	char	*var_name;
 
-	minish->exit_status = 0;
 	y = 0;
 	if (twod_array_len(minish->options) == 1)
 		env(local_env, minish);
@@ -68,18 +66,27 @@ char	**export(char	**local_env, t_minishell *minish)
 			free(var_name);
 		}
 	}
+	return (local_env);
+}
+
+char	**export(char	**local_env, t_minishell *minish)
+{
+	int		x;
+	int		y;
+	char	**new_env;
+
+	minish->exit_status = 0;
 	y = 0;
+	local_env = export_check(minish, local_env);
 	while (minish->options[++y])
 	{
-		if (valid_var_name(minish->options[y], minish) || !ft_strchr(minish->options[y], '='))
+		if (valid_var_name(minish->options[y], minish)
+			|| !ft_strchr(minish->options[y], '='))
 			continue ;
 		new_env = malloc((twod_array_len(local_env) + 2) * sizeof(char *));
-		x = 0;
-		while (local_env[x])
-		{
+		x = -1;
+		while (local_env[++x])
 			new_env[x] = local_env[x];
-			x++;
-		}
 		new_env[x] = ft_strdup(minish->options[y]);
 		x++;
 		new_env[x] = 0;
