@@ -3,85 +3,89 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbenkhat <mbenkhat@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/24 18:55:01 by tnamir            #+#    #+#             */
-/*   Updated: 2022/03/25 11:30:29 by mbenkhat         ###   ########.fr       */
+/*   Created: 2022/03/26 12:05:27 by tnamir            #+#    #+#             */
+/*   Updated: 2022/03/26 12:27:32 by tnamir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static char	*before_equal(char *str)
+static char	*var_name_func(char *var)
 {
-	int		x;
-	char	*p;
+	int	i;
+	char	*var_name;
 
-	x = 0;
-	if (str)
+	i = 0;
+	while (var[i] != '=' && var[i])
+		i++;
+	var_name = malloc(i + 1);
+	i = -1;
+	while (var[++i] != '=' && var[i])
+		var_name[i] = var[i];
+	var_name[i] = 0;
+	return (var_name);
+}
+
+static int	valid_var_name(char	*var, t_minishell *minish)
+{
+	int	x;
+
+	x = -1;
+	while (var[++x])
 	{
-		while (str[x] && str[x] != '=')
-			x++;
-		x++;
-		p = malloc(x);
-		x = 0;
-		while (str[x] && str[x] != '=')
+		if(!ft_isalnum(var[x]) && var[x] != '_' && var[x] != '=')
 		{
-			p[x] = str[x];
-			x++;
+			printf("export: not valid in this context: %s\n", var);
+			minish->exit_status = 1;
+			return (1);
 		}
-		p[x] = '=';
-		p[x + 1] = '\0';
-		return (p);
 	}
 	return (0);
 }
 
-static char	*after_equal(char *str)
-{
-	int	size;
-	int	x;
-
-	size = ft_strlen(str);
-	x = 0;
-	while (str[x] && str[x] != '=')
-		x++;
-	x++;
-	if (x == size)
-		return ("\'\'");
-	return (str + x);
-}
-
-void	export(t_minishell *minish, char *new_var)
+char	**export(char	**local_env, t_minishell *minish)
 {
 	int		x;
-	char	**tmp_env;
-	char	*name;
+	int		y;
+	char	**new_env;
+	char	*var_name;
 
-	x = -1;
-	if (new_var)
-	{
-		tmp_env = minish->new_env;
-		minish->new_env
-			= malloc((twod_array_len(minish->new_env) + 1) * sizeof(char *));
-		while (tmp_env[++x])
-			minish->new_env[x] = tmp_env[x];
-		if (ft_strchr(new_var, '='))
-		{
-			name = before_equal(new_var);
-			minish->new_env[x++] = ft_strjoin(name, after_equal(new_var));
-			free(name);
-		}
-		else
-			minish->new_env[x++] = ft_strjoin(new_var, "=\'\'");
-		minish->new_env[x] = NULL;
-		x = -1;
-	}
+	minish->exit_status = 0;
+	y = 0;
+	if (twod_array_len(minish->options) == 1)
+		env(local_env, minish);
 	else
 	{
-		x = 0;
-		while (minish->new_env[x++])
-			ft_putendl_fd(minish->new_env[x], 1);
+		while (minish->options[y])
+		{
+			var_name = var_name_func(minish->options[y]);
+			if (is_var(local_env, var_name))
+				local_env = unset_var(var_name, local_env);
+			else
+				y++;
+		}
 	}
+	y = 0;
+	while (minish->options[++y])
+	{
+		if (valid_var_name(minish->options[y], minish) || !ft_strchr(minish->options[y], '='))
+			continue ;
+		var_name = var_name_func(minish->options[y]);
+		new_env = malloc((twod_array_len(local_env) + 2) * sizeof(char *));
+		x = 0;
+		while (local_env[x])
+		{
+			new_env[x] = local_env[x];
+			x++;
+		}
+		new_env[x] = ft_strdup(minish->options[y]);
+		x++;
+		new_env[x] = 0;
+		free(local_env);
+		local_env = new_env;
+	}
+	// free(var_name);
+	return (local_env);
 }
-
