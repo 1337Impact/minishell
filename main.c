@@ -6,7 +6,7 @@
 /*   By: mbenkhat <mbenkhat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:30:16 by tnamir            #+#    #+#             */
-/*   Updated: 2022/03/25 13:37:48 by mbenkhat         ###   ########.fr       */
+/*   Updated: 2022/03/25 17:19:25 by mbenkhat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,16 @@ void	conditions(t_minishell *minishell,
 		echo(minishell->options, minishell);
 	else if (!ft_strncmp(minishell->options[0], "env", 4))
 		env(minishell->local_env, minishell);
+	else if (!ft_strncmp(minishell->options[0], "export", 7))
+		minishell->local_env = export(minishell->local_env, minishell);
+	else if (!ft_strncmp(minishell->options[0], "unset", 5))
+		minishell->local_env = unset(minishell->local_env, minishell);
 	else if (f_or_d(minishell->options[0]) == 'd')
 		cd(minishell->options[0], minishell);
-	else if (!ft_strncmp(minishell->options[0], "export", 7))
-		minishell->local_env = export(minishell->local_env, minishell->options[1]);
-	else if (!ft_strncmp(minishell->options[0], "unset", 5))
-		minishell->local_env = unset(minishell->local_env, minishell->options[1]);
 	else
+	{
 		execute(minishell->options[0], envp, minishell, minishell->options);
+	}
 }
 
 static int	tab_sp_check(char	*input)
@@ -82,6 +84,6 @@ int	main(int c, char **v, char **envp)
 			perror("error ");
 		conditions(&minishell, input, envp);
 		free(input);
-	}	
+	}
 	return (0);
 }

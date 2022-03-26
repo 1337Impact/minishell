@@ -6,7 +6,7 @@
 /*   By: mbenkhat <mbenkhat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:32:40 by tnamir            #+#    #+#             */
-/*   Updated: 2022/03/25 12:32:04 by mbenkhat         ###   ########.fr       */
+/*   Updated: 2022/03/25 17:19:16 by mbenkhat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ char	*ft_charjoin(char	*str, char c);
 void	env(char	**env, t_minishell *minish);
 void	echo(char	**options, t_minishell *minish);
 void	cd(char *path, t_minishell *minish);
-char	**export(char	**local_env, char *var);
-char	**unset(char	**local_env, char *var);
+char	**export(char	**local_env, t_minishell *minish);
+char	**unset(char	**local_env, t_minishell *minish);
 
 #endif
