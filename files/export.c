@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: mbenkhat <mbenkhat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 12:05:27 by tnamir            #+#    #+#             */
-/*   Updated: 2022/03/26 12:27:32 by tnamir           ###   ########.fr       */
+/*   Updated: 2022/03/26 12:37:12 by mbenkhat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ char	**export(char	**local_env, t_minishell *minish)
 				local_env = unset_var(var_name, local_env);
 			else
 				y++;
+			free(var_name);
 		}
 	}
 	y = 0;
@@ -72,7 +73,6 @@ char	**export(char	**local_env, t_minishell *minish)
 	{
 		if (valid_var_name(minish->options[y], minish) || !ft_strchr(minish->options[y], '='))
 			continue ;
-		var_name = var_name_func(minish->options[y]);
 		new_env = malloc((twod_array_len(local_env) + 2) * sizeof(char *));
 		x = 0;
 		while (local_env[x])
@@ -86,6 +86,5 @@ char	**export(char	**local_env, t_minishell *minish)
 		free(local_env);
 		local_env = new_env;
 	}
-	// free(var_name);
 	return (local_env);
 }
