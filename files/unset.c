@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: mbenkhat <mbenkhat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 11:29:51 by mbenkhat          #+#    #+#             */
-/*   Updated: 2022/03/26 12:29:41 by tnamir           ###   ########.fr       */
+/*   Updated: 2022/03/26 14:23:36 by mbenkhat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,9 @@ static int	valid_var_name(char	*var, t_minishell *minish)
 	{
 		if (!ft_isalnum(var[x]) || var[x] == '_')
 		{
-			printf("unset: %s: invalid parameter name\n", var);
+			ft_putstr_fd("unset: ", 2);
+			ft_putstr_fd(var, 2);
+			ft_putendl_fd(": invalid parameter name", 2);
 			minish->exit_status = 1;
 			return (1);
 		}
@@ -77,7 +79,7 @@ char	**unset(char **local_env, t_minishell *minish)
 	minish->exit_status = 0;
 	if (twod_array_len(minish->options) == 1)
 	{
-		printf("unset: not enough arguments\n");
+		ft_putendl_fd("unset: not enough arguments", 2);
 		minish->exit_status = 1;
 		return (local_env);
 	}
@@ -91,6 +93,5 @@ char	**unset(char **local_env, t_minishell *minish)
 			continue ;
 		local_env = unset_var(minish->options[y], local_env);
 	}
-	minish->exit_status = 0;
 	return (local_env);
 }

@@ -6,7 +6,7 @@
 /*   By: mbenkhat <mbenkhat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 12:05:27 by tnamir            #+#    #+#             */
-/*   Updated: 2022/03/26 13:25:03 by mbenkhat         ###   ########.fr       */
+/*   Updated: 2022/03/26 14:16:18 by mbenkhat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ static int	valid_var_name(char	*var, t_minishell *minish)
 	{
 		if (!ft_isalnum(var[x]) && var[x] != '_' && var[x] != '=')
 		{
-			printf("export: not valid in this context: %s\n", var);
+			ft_putstr_fd("export: not valid in this context: ", 2);
+			ft_putendl_fd(var, 2);
 			minish->exit_status = 1;
 			return (1);
 		}
@@ -53,7 +54,10 @@ static char	**export_check(t_minishell *minish, char **local_env)
 
 	y = 0;
 	if (twod_array_len(minish->options) == 1)
-		env(local_env, minish);
+	{
+		while (minish->local_env[y])
+			ft_putendl_fd(minish->local_env[y++], minish->w_fd);
+	}
 	else
 	{
 		while (minish->options[y])

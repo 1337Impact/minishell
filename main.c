@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: mbenkhat <mbenkhat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:30:16 by tnamir            #+#    #+#             */
-/*   Updated: 2022/03/26 13:06:56 by tnamir           ###   ########.fr       */
+/*   Updated: 2022/03/26 16:23:59 by mbenkhat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static int	tab_sp_check(char	*input)
 	return (0);
 }
 
-static void	more_conditions(t_minishell *minishell, char **envp)
+static void	more_conditions(t_minishell *minishell)
 {
 	if (!ft_strncmp(minishell->options[0], "cd", 3))
 		cd(minishell->options[1], minishell);
@@ -38,27 +38,24 @@ static void	more_conditions(t_minishell *minishell, char **envp)
 	else if (f_or_d(minishell->options[0]) == 'd')
 		cd(minishell->options[0], minishell);
 	else
-	{
-		execute(minishell->options[0], envp, minishell, minishell->options);
-	}
+		execute(minishell->options[0], minishell, minishell->options);
 }
 
 void	conditions(t_minishell *minishell,
 	char	*input, char **envp)
 {
 	(void)envp;
-	input = rm_early_sp(rm_late_sp(input));
 	minishell->options = quotes_presence(input, minishell);
 	minishell->prompt = CYAN"💀 Minishell ➤\033[0m";
 	if (!ft_strncmp(minishell->options[0], "exit", 5))
 		minishell->exita = 1;
 	else if (!ft_strncmp(minishell->options[0], "pwd", 4))
 	{
-		printf("%s\n", minishell->current_dir);
+		ft_putendl_fd(minishell->current_dir, minishell->w_fd);
 		minishell->exit_status = 0;
 	}
 	else
-		more_conditions(minishell, envp);
+		more_conditions(minishell);
 }
 
 static void	wanna_be_main(t_minishell *minishell, char	**envp)
@@ -77,8 +74,9 @@ static void	wanna_be_main(t_minishell *minishell, char	**envp)
 			continue ;
 		if (add_history(input))
 			perror("error ");
-		pipe_hand(minishell, input);
-		conditions(minishell, input, envp);
+		input = rm_early_sp(rm_late_sp(input));
+		if (!pipe_hand(minishell, input))
+			conditions(minishell, input, envp);
 		free(input);
 	}
 }
@@ -97,6 +95,8 @@ int	main(int c, char **v, char **envp)
 	minishell.local_env[i] = 0;
 	minishell.prompt = CYAN"💀 Minishell ➤\033[0m";
 	minishell.exit_status = 0;
+	minishell.r_fd = 0;
+	minishell.w_fd = 1;
 	wanna_be_main(&minishell, envp);
 	return (0);
 }

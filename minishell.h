@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: mbenkhat <mbenkhat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:32:40 by tnamir            #+#    #+#             */
-/*   Updated: 2022/03/26 13:05:47 by tnamir           ###   ########.fr       */
+/*   Updated: 2022/03/26 17:40:25 by mbenkhat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <errno.h>
+# include <fcntl.h>
 
 typedef struct s_minishell
 {
@@ -35,9 +36,11 @@ typedef struct s_minishell
 	char	**options;
 	char	**local_env;
 	int		exit_status;
+	int		w_fd;
+	int		r_fd;
 }	t_minishell;
 
-void	execute(char *input, char **envp, t_minishell *minishell, char	**argv);
+void	execute(char *input, t_minishell *minishell, char	**argv);
 char	f_or_d(char *input);
 char	*rm_late_sp(char	*s);
 char	*rm_early_sp(char	*s);
@@ -46,6 +49,7 @@ int		count_cmds(char *input);
 char	*var_handler(char *buff, char *str, t_minishell *minish, int *x);
 char	**cpy_it(char	*input, char	**options);
 char	*ft_charjoin(char	*str, char c);
+void	conditions(t_minishell *minishell, char	*input, char **envp);
 
 // builtins commands
 void	env(char	**env, t_minishell *minish);
@@ -55,6 +59,6 @@ int		is_var(char	**local_env, char *var);
 char	**unset_var(char *var_name, char **local_env);
 char	**export(char	**local_env, t_minishell *minish);
 char	**unset(char	**local_env, t_minishell *minish);
-void	pipe_hand(t_minishell *minish, char *input);
+int		pipe_hand(t_minishell *minish, char *input);
 
 #endif
