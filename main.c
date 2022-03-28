@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbenkhat <mbenkhat@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:30:16 by tnamir            #+#    #+#             */
-/*   Updated: 2022/03/28 11:53:41 by mbenkhat         ###   ########.fr       */
+/*   Updated: 2022/03/28 15:22:14 by tnamir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,13 @@ static void	more_conditions(t_minishell *minishell)
 		minishell->local_env = unset(minishell->local_env, minishell);
 	else if (f_or_d(minishell->options[0]) == 'd')
 		cd(minishell->options[0], minishell);
-	else
+	else if (f_or_d(minishell->options[0]) == 'f')
 		execute(minishell->options[0], minishell, minishell->options);
+	else
+	{
+		printf("minishell: command not found: %s\n", minishell->options[0]);
+		minishell->exit_status = 1;
+	}
 }
 
 void	conditions(t_minishell *minishell,
