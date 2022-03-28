@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbenkhat <mbenkhat@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 12:55:03 by tnamir            #+#    #+#             */
-/*   Updated: 2022/03/28 12:29:08 by mbenkhat         ###   ########.fr       */
+/*   Updated: 2022/03/28 13:50:10 by tnamir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,10 @@ int	pipe_check(char *input, int *x)
 int	pipe_hand(t_minishell *minish, char	*input)
 {
 	int		x;
-	int		y;
 	int		start;
 	char	*str;
 	int		fd[2];
+	int		rd;
 
 	x = 0;
 	input = rm_early_sp(rm_late_sp(input));
@@ -74,18 +74,38 @@ int	pipe_hand(t_minishell *minish, char	*input)
 	// str = ft_substr(input, start, x);
 	// str = rm_early_sp(rm_late_sp(str));
 	// minish->p = 3;
-	// conditions(minish, str);
+	// 
 	/////////////////
 
 	x = 0;
-	y = 0;
-	while (pipe_check(input, &x))
+	start = 0;
+	rd = 0;
+	while (pipe_check(input, &x) == 1)
 	{
 		if (pipe(fd) == -1)
 			return (2);
-		minish->p += 1;
-		minish->r_fd = fd[0];
+		if (minish->p < 2)
+			minish->p += 1;
+		if (!rd)
+			rd = fd[0];
+		else
+		{
+			minish->r_fd = rd;
+			rd = fd[0];
+		}
 		minish->w_fd = fd[1];
+		str = ft_substr(input, start, x - start);
+		str = rm_early_sp(rm_late_sp(str));
+		conditions(minish, str);
+		x++;
+		start = x;
+		// free(str);
 	}
+	minish->w_fd = 1;
+	minish->r_fd = rd;
+	minish->p = 3;
+	str = ft_substr(input, start, x - start);
+	str = rm_early_sp(rm_late_sp(str));
+	conditions(minish, str);
 	return (1);
 }
