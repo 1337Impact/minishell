@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: mbenkhat <mbenkhat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 16:41:40 by tnamir            #+#    #+#             */
-/*   Updated: 2022/03/23 18:38:11 by tnamir           ###   ########.fr       */
+/*   Updated: 2022/03/28 17:39:31 by mbenkhat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,4 +33,14 @@ int	count_cmds(char *input)
 		}
 	}
 	return (++counter);
+}
+
+void	twod_free(char	**array)
+{
+	int	x;
+
+	x = -1;
+	while (array[++x])
+		free(array[x]);
+	free(array);
 }
