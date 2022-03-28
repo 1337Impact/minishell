@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbenkhat <mbenkhat@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 12:55:03 by tnamir            #+#    #+#             */
-/*   Updated: 2022/03/28 17:44:48 by mbenkhat         ###   ########.fr       */
+/*   Updated: 2022/03/28 18:42:38 by tnamir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	pipe_check(char *input, int *x)
 	int	q_c;
 
 	q_c = 0;
-	if (input[0] == '|') 
+	if (input[0] == '|')
 		return (2);
 	while (input[*x])
 	{
@@ -76,21 +76,20 @@ int	pipe_hand(t_minishell *minish, char	*input)
 		}
 		minish->w_fd = fd[1];
 		str = ft_substr(input, start, x - start);
-		str = rm_early_sp(rm_late_sp(str));
-		conditions(minish, str);
+		conditions(minish, rm_early_sp(rm_late_sp(str)));
 		close(minish->w_fd);
 		if (!rd)
 			close(rd);
 		x++;
 		start = x;
-		// free(str);
+		free(str);
 	}
 	minish->w_fd = 1;
 	minish->r_fd = rd;
 	minish->p = 3;
 	str = ft_substr(input, start, x - start);
-	str = rm_early_sp(rm_late_sp(str));
-	conditions(minish, str);
+	conditions(minish, rm_early_sp(rm_late_sp(str)));
 	close(rd);
+	free(str);
 	return (1);
 }

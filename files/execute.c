@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbenkhat <mbenkhat@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 17:04:25 by tnamir            #+#    #+#             */
-/*   Updated: 2022/03/28 17:47:19 by mbenkhat         ###   ########.fr       */
+/*   Updated: 2022/03/28 18:37:18 by tnamir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*valid_cmd(t_minishell *minish, char	*cmd)
 	char	*cmd_path;
 
 	(void)cmd;
-	x  = 0;
+	x = 0;
 	while (ft_strncmp(minish->local_env[x], "PATH=", 5))
 		x++;
 	all_paths = ft_split(minish->local_env[x] + 5, ':');
@@ -41,31 +41,28 @@ char	*valid_cmd(t_minishell *minish, char	*cmd)
 	return (0);
 }
 
+void	errory(t_minishell *minish)
+{
+	minish->exit_status = 127;
+	printf("minishell: command not found: %s\n", minish->options[0]);
+	return ;
+}
+
 void	execute(char *cmd, t_minishell *minish, char **argv)
 {
 	minish->exit_status = 0;
 	if (cmd[0] != '/')
 		cmd = valid_cmd(minish, cmd);
 	if (!cmd)
-	{
-		minish->exit_status = 127;
-		printf("minishell: command not found: %s\n", minish->options[0]);
-		return ;
-	}
+		return (errory(minish));
 	if (!fork())
 	{
 		if (minish->p)
 		{
 			if (minish->p == 1 || minish->p == 2)
-			{
-				dup2(minish->w_fd, 1);
-				// close(minish->w_fd);
-			}
+				dup2(minish->w_fd, 1); // close(minish->w_fd);
 			if (minish->p == 3 || minish->p == 2)
-			{
-				dup2(minish->r_fd, 0);
-				// close(minish->r_fd);
-			}
+				dup2(minish->r_fd, 0); // close(minish->r_fd);
 		}
 		if (execve(cmd, argv, minish->local_env) == -1)
 		{
