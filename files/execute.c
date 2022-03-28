@@ -6,7 +6,7 @@
 /*   By: mbenkhat <mbenkhat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 17:04:25 by tnamir            #+#    #+#             */
-/*   Updated: 2022/03/28 17:41:30 by mbenkhat         ###   ########.fr       */
+/*   Updated: 2022/03/28 17:47:19 by mbenkhat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,12 @@ void	execute(char *cmd, t_minishell *minish, char **argv)
 {
 	minish->exit_status = 0;
 	if (cmd[0] != '/')
-	{
 		cmd = valid_cmd(minish, cmd);
+	if (!cmd)
+	{
+		minish->exit_status = 127;
+		printf("minishell: command not found: %s\n", minish->options[0]);
+		return ;
 	}
 	if (!fork())
 	{
