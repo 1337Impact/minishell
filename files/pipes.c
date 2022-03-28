@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: mbenkhat <mbenkhat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 12:55:03 by tnamir            #+#    #+#             */
-/*   Updated: 2022/03/28 13:50:10 by tnamir           ###   ########.fr       */
+/*   Updated: 2022/03/28 15:44:14 by mbenkhat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,9 @@ int	pipe_hand(t_minishell *minish, char	*input)
 		str = ft_substr(input, start, x - start);
 		str = rm_early_sp(rm_late_sp(str));
 		conditions(minish, str);
+		close(minish->w_fd);
+		if (!rd)
+			close(rd);
 		x++;
 		start = x;
 		// free(str);
@@ -107,5 +110,6 @@ int	pipe_hand(t_minishell *minish, char	*input)
 	str = ft_substr(input, start, x - start);
 	str = rm_early_sp(rm_late_sp(str));
 	conditions(minish, str);
+	close(rd);
 	return (1);
 }
