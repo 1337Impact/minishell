@@ -6,7 +6,7 @@
 /*   By: mbenkhat <mbenkhat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 12:55:03 by tnamir            #+#    #+#             */
-/*   Updated: 2022/03/26 18:08:37 by mbenkhat         ###   ########.fr       */
+/*   Updated: 2022/03/28 12:29:08 by mbenkhat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ int	pipe_check(char *input, int *x)
 int	pipe_hand(t_minishell *minish, char	*input)
 {
 	int		x;
+	int		y;
 	int		start;
 	char	*str;
 	int		fd[2];
@@ -59,21 +60,32 @@ int	pipe_hand(t_minishell *minish, char	*input)
 	}
 	////////////////
 
-	if (pipe(fd) == -1)
-		return (1);
-	dup2(fd[1], 1);
-	str = ft_substr(input, 0, x);
-	str = rm_early_sp(str);
-	conditions(minish, str, minish->local_env);
-	free(str);
-	dup2(fd[0], 0);
-	dup2(fd[1], 1);
-	start = ++x;
-	pipe_check(input, &x);
-	str = ft_substr(input, start, x);
-	str = rm_early_sp(str);
-	conditions(minish, str, minish->local_env);
-	
+	// if (pipe(fd) == -1)
+	// 	return (2);
+	// minish->p = 1;
+	// minish->r_fd = fd[0];
+	// minish->w_fd = fd[1];
+	// str = ft_substr(input, 0, x);
+	// str = rm_early_sp(rm_late_sp(str));
+	// conditions(minish, str);
+	// free(str);
+	// start = ++x;
+	// pipe_check(input, &x);
+	// str = ft_substr(input, start, x);
+	// str = rm_early_sp(rm_late_sp(str));
+	// minish->p = 3;
+	// conditions(minish, str);
 	/////////////////
+
+	x = 0;
+	y = 0;
+	while (pipe_check(input, &x))
+	{
+		if (pipe(fd) == -1)
+			return (2);
+		minish->p += 1;
+		minish->r_fd = fd[0];
+		minish->w_fd = fd[1];
+	}
 	return (1);
 }

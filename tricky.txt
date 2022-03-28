@@ -1,0 +1,10 @@
+Makefile
+a.out
+files
+libft
+main.c
+minishell
+minishell.h
+test.c
+tricky.txt
+df

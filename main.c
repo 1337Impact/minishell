@@ -6,7 +6,7 @@
 /*   By: mbenkhat <mbenkhat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:30:16 by tnamir            #+#    #+#             */
-/*   Updated: 2022/03/26 16:23:59 by mbenkhat         ###   ########.fr       */
+/*   Updated: 2022/03/28 11:53:41 by mbenkhat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,8 @@ static void	more_conditions(t_minishell *minishell)
 }
 
 void	conditions(t_minishell *minishell,
-	char	*input, char **envp)
+	char	*input)
 {
-	(void)envp;
 	minishell->options = quotes_presence(input, minishell);
 	minishell->prompt = CYAN"💀 Minishell ➤\033[0m";
 	if (!ft_strncmp(minishell->options[0], "exit", 5))
@@ -58,7 +57,7 @@ void	conditions(t_minishell *minishell,
 		more_conditions(minishell);
 }
 
-static void	wanna_be_main(t_minishell *minishell, char	**envp)
+static void	wanna_be_main(t_minishell *minishell)
 {
 	char	*input;
 
@@ -76,7 +75,7 @@ static void	wanna_be_main(t_minishell *minishell, char	**envp)
 			perror("error ");
 		input = rm_early_sp(rm_late_sp(input));
 		if (!pipe_hand(minishell, input))
-			conditions(minishell, input, envp);
+			conditions(minishell, input);
 		free(input);
 	}
 }
@@ -97,6 +96,7 @@ int	main(int c, char **v, char **envp)
 	minishell.exit_status = 0;
 	minishell.r_fd = 0;
 	minishell.w_fd = 1;
-	wanna_be_main(&minishell, envp);
+	minishell.p = 0;
+	wanna_be_main(&minishell);
 	return (0);
 }
