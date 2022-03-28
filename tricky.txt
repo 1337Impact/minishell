@@ -7,4 +7,4 @@ minishell
 minishell.h
 test.c
 tricky.txt
-df
+dfI will be printed in the file tricky.txt
