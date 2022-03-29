@@ -6,7 +6,7 @@
 /*   By: mbenkhat <mbenkhat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 17:04:25 by tnamir            #+#    #+#             */
-/*   Updated: 2022/03/28 17:47:19 by mbenkhat         ###   ########.fr       */
+/*   Updated: 2022/03/28 18:34:26 by mbenkhat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,12 +59,12 @@ void	execute(char *cmd, t_minishell *minish, char **argv)
 			if (minish->p == 1 || minish->p == 2)
 			{
 				dup2(minish->w_fd, 1);
-				// close(minish->w_fd);
+				close(minish->w_fd);
 			}
 			if (minish->p == 3 || minish->p == 2)
 			{
 				dup2(minish->r_fd, 0);
-				// close(minish->r_fd);
+				close(minish->r_fd);
 			}
 		}
 		if (execve(cmd, argv, minish->local_env) == -1)

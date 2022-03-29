@@ -6,7 +6,7 @@
 /*   By: mbenkhat <mbenkhat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:30:16 by tnamir            #+#    #+#             */
-/*   Updated: 2022/03/28 17:32:14 by mbenkhat         ###   ########.fr       */
+/*   Updated: 2022/03/29 09:48:50 by mbenkhat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,9 @@ static void	wanna_be_main(t_minishell *minishell)
 
 	while (!minishell->exita)
 	{
+		minishell->r_fd = 0;
+		minishell->w_fd = 1;
+		minishell->p = 0;
 		getcwd(minishell->current_dir, 200);
 		if (minishell->exit_status)
 			minishell->prompt = RED"👹 Minishell ➤\033[0m";
@@ -94,8 +97,6 @@ int	main(int c, char **v, char **envp)
 	minishell.local_env[i] = 0;
 	minishell.prompt = CYAN"💀 Minishell ➤\033[0m";
 	minishell.exit_status = 0;
-	minishell.r_fd = 0;
-	minishell.w_fd = 1;
 	minishell.p = 0;
 	wanna_be_main(&minishell);
 	return (0);
