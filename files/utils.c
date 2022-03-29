@@ -6,7 +6,7 @@
 /*   By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 16:41:40 by tnamir            #+#    #+#             */
-/*   Updated: 2022/03/29 16:41:49 by tnamir           ###   ########.fr       */
+/*   Updated: 2022/03/29 18:53:23 by tnamir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,22 @@ int	count_cmds(char *input)
 			counter++;
 		while (input[i] == ' ')
 			i++;
-		if (input[i] == '\'' || input[i] == '\"')
+		if (input[i] == '>')
+			counter++;
+		if (input[i] == '\'')
 		{
 			i++;
-			while ((input[i] != '\'' && input[i] != '\"') && input[i])
+			while (input[i] != '\'' && input[i])
+				i++;
+		}
+		else if (input[i] == '\"')
+		{
+			i++;
+			while (input[i] != '\"' && input[i])
 				i++;
 		}
 	}
+	printf("%d", counter + 1);
 	return (++counter);
 }
 
