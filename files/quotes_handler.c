@@ -6,7 +6,7 @@
 /*   By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 15:29:23 by tnamir            #+#    #+#             */
-/*   Updated: 2022/03/24 17:32:16 by tnamir           ###   ########.fr       */
+/*   Updated: 2022/03/29 16:37:44 by tnamir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,9 @@ char	**quotes_presence(char	*input, t_minishell	*minish)
 	i = -1;
 	minish->options = cpy_it(input, minish->options);
 	while (minish->options[++i])
-			minish->options[i] = quotes_handler(minish->options[i], minish);
+	{
+		minish->options[i] = quotes_handler(minish->options[i], minish);
+		// printf("%s\n", minish->options[i]);
+	}
 	return (minish->options);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbenkhat <mbenkhat@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:32:40 by tnamir            #+#    #+#             */
-/*   Updated: 2022/03/28 17:39:49 by mbenkhat         ###   ########.fr       */
+/*   Updated: 2022/03/29 15:02:08 by tnamir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,5 +62,6 @@ char	**unset_var(char *var_name, char **local_env);
 char	**export(char	**local_env, t_minishell *minish);
 char	**unset(char	**local_env, t_minishell *minish);
 int		pipe_hand(t_minishell *minish, char *input);
+int		redirections_check(t_minishell *minish);
 
 #endif

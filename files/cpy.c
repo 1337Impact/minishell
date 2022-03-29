@@ -6,13 +6,13 @@
 /*   By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 18:39:20 by tnamir            #+#    #+#             */
-/*   Updated: 2022/03/23 18:41:15 by tnamir           ###   ########.fr       */
+/*   Updated: 2022/03/29 16:40:48 by tnamir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static	void	keep_cpying_it(int	*x, int	*sub_size, char *input)
+static	void	passing_stuff(int	*x, int	*sub_size, char *input)
 {
 	if (input[*x] == '\'')
 	{
@@ -57,7 +57,7 @@ char	**cpy_it(char	*input, char	**options)
 	{
 		start = x;
 		sub_size = 0;
-		keep_cpying_it(&x, &sub_size, input);
+		passing_stuff(&x, &sub_size, input);
 		while (input[x] == ' ')
 			x++;
 		options[y] = ft_substr(input, start, sub_size);

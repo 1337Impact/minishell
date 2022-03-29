@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbenkhat <mbenkhat@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:30:16 by tnamir            #+#    #+#             */
-/*   Updated: 2022/03/29 09:48:50 by mbenkhat         ###   ########.fr       */
+/*   Updated: 2022/03/29 15:20:48 by tnamir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	conditions(t_minishell *minishell,
 	char	*input)
 {
 	minishell->options = quotes_presence(input, minishell);
+	redirections_check(minishell);
 	minishell->prompt = CYAN"💀 Minishell ➤\033[0m";
 	if (!ft_strncmp(minishell->options[0], "exit", 5))
 		minishell->exita = 1;
