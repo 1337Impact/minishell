@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes_handler.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: mbenkhat <mbenkhat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 15:29:23 by tnamir            #+#    #+#             */
-/*   Updated: 2022/03/29 16:37:44 by tnamir           ###   ########.fr       */
+/*   Updated: 2022/03/29 17:05:21 by mbenkhat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,6 @@ char	*quotes_handler(char *str, t_minishell *minish)
 	{
 		if (str[x] == '$')
 			buff = var_handler(buff, str, minish, &x);
-		else if (str[x] == '\"')
-			buff = keep_handling(str, minish, buff, &x);
 		else if (str[x] == '\'')
 		{
 			x++;
@@ -79,7 +77,6 @@ char	**quotes_presence(char	*input, t_minishell	*minish)
 	while (minish->options[++i])
 	{
 		minish->options[i] = quotes_handler(minish->options[i], minish);
-		// printf("%s\n", minish->options[i]);
 	}
 	return (minish->options);
 }
