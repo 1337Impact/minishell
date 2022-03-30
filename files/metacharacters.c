@@ -6,7 +6,7 @@
 /*   By: mbenkhat <mbenkhat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 08:57:42 by mbenkhat          #+#    #+#             */
-/*   Updated: 2022/03/30 13:52:46 by mbenkhat         ###   ########.fr       */
+/*   Updated: 2022/03/30 16:07:23 by mbenkhat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,9 @@ int	check_metacharacters(char *input)
 		if (input[i + 1] == '<')
 			i++;
 	}
-	if (!(ft_isalnum(input[i + 1]) || input[i + 1] == '\'' || input[i + 1] == '\"' || input[i + 1] == '$' || input[i + 1] == ' '))
+	if (!(ft_isalnum(input[i + 1]) || input[i + 1] == '\''
+			|| input[i + 1] == '\"' || input[i + 1] == '$'
+			|| input[i + 1] == ' '))
 		return (0);
 	return (i);
 }
@@ -76,18 +78,18 @@ int	metacharacters(char *input, t_minishell *minish)
 		if (!input[x])
 		{
 			minish->p = 3;
-			conditions(minish, rm_early_sp(rm_late_sp(input)));
+			conditions(minish, input);
 			close(minish->r_fd);
 			return (1);
 		}
-		else if (!x)
-			parce_error();
+		if (!x)
+			parse_error();
 		else if (input[x] == '>' && input[x - 1] == '>')
 			redirect_append();
 		else if (input[x] == '<' && input[x - 1] == '<')
 			delimiter_input();
 		else if (input[x] == '>')
-			redirect_output();
+			redirect_output(minish, input, x);
 		else if (input[x] == '<')
 			redirect_input();
 		else if (input[x] == '|')

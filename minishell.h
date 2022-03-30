@@ -6,7 +6,7 @@
 /*   By: mbenkhat <mbenkhat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:32:40 by tnamir            #+#    #+#             */
-/*   Updated: 2022/03/30 13:31:22 by mbenkhat         ###   ########.fr       */
+/*   Updated: 2022/03/30 16:06:48 by mbenkhat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ char	f_or_d(char *input);
 char	*rm_late_sp(char	*s);
 char	*rm_early_sp(char	*s);
 char	**quotes_presence(char	*input, t_minishell	*minish);
+char	*quotes_handler(char *str, t_minishell *minish);
 int		count_cmds(char *input);
 char	*var_handler(char *buff, char *str, t_minishell *minish, int *x);
 char	**cpy_it(char	*input, char	**options);
@@ -66,10 +67,11 @@ int		redirections_check(t_minishell *minish);
 
 // metacharachters
 int		metacharacters(char *input, t_minishell *minish);
-void	redirect_output();
+void	redirect_output(t_minishell *minish, char *input, int x);
+int		check_metacharacters(char *input);
 void	redirect_append();
 void	delimiter_input();
 void	redirect_input();
-void	parce_error();
+void	parse_error();
 
 #endif

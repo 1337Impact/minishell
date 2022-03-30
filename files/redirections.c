@@ -6,7 +6,7 @@
 /*   By: mbenkhat <mbenkhat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 09:52:37 by mbenkhat          #+#    #+#             */
-/*   Updated: 2022/03/30 10:44:27 by mbenkhat         ###   ########.fr       */
+/*   Updated: 2022/03/30 16:13:40 by mbenkhat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,24 @@
 // 	return (0);
 // }
 
-void	redirect_output()
+void	redirect_output(t_minishell *minish, char *input, int x)
 {
-	printf("redirect_output\n");
+	char	*cmd;
+	char	*file_name;
+
+	cmd = ft_substr(input, 0, x - 1);
+	while (input[x] == '>')
+	{
+		x++;
+		printf("%d\n", x);
+		input = rm_late_sp((rm_early_sp(input + x)));
+		file_name = quotes_handler(ft_substr(input, 0, x), minish);
+		minish->w_fd = open(file_name, O_RDWR | O_CREAT, S_IRWXU);
+		minish->p = 1;
+		conditions(minish, cmd);
+		x = check_metacharacters(input);
+		close(minish->w_fd);
+	}
 }
 void	redirect_append()
 {
@@ -58,7 +73,7 @@ void	redirect_input()
 {
 	printf("redirect_input\n");
 }
-void	parce_error()
+void	parse_error()
 {
-	printf("parce_error\n");
+	printf("parse_error\n");
 }

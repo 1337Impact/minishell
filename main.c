@@ -6,7 +6,7 @@
 /*   By: mbenkhat <mbenkhat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:30:16 by tnamir            #+#    #+#             */
-/*   Updated: 2022/03/30 10:47:56 by mbenkhat         ###   ########.fr       */
+/*   Updated: 2022/03/30 14:16:35 by mbenkhat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ static void	more_conditions(t_minishell *minishell)
 void	conditions(t_minishell *minishell,
 	char	*input)
 {
+	input = rm_early_sp(rm_late_sp(input));
 	minishell->options = quotes_presence(input, minishell);
-	// redirections_check(minishell);
 	minishell->prompt = CYAN"💀 Minishell ➤\033[0m";
 	if (!ft_strncmp(minishell->options[0], "exit", 5))
 		minishell->exita = 1;

@@ -6,7 +6,7 @@
 /*   By: mbenkhat <mbenkhat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 15:29:23 by tnamir            #+#    #+#             */
-/*   Updated: 2022/03/29 17:05:21 by mbenkhat         ###   ########.fr       */
+/*   Updated: 2022/03/30 14:21:54 by mbenkhat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,19 +64,21 @@ char	*quotes_handler(char *str, t_minishell *minish)
 		else
 			buff = ft_charjoin(buff, str[x++]);
 	}
-	free (str);
 	return (buff);
 }
 
 char	**quotes_presence(char	*input, t_minishell	*minish)
 {
-	int	i;
+	int		i;
+	char	*str;
 
 	i = -1;
 	minish->options = cpy_it(input, minish->options);
 	while (minish->options[++i])
 	{
+		str = minish->options[i];
 		minish->options[i] = quotes_handler(minish->options[i], minish);
+		free(str);
 	}
 	return (minish->options);
 }
