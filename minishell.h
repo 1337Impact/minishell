@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: mbenkhat <mbenkhat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:32:40 by tnamir            #+#    #+#             */
-/*   Updated: 2022/03/29 15:02:08 by tnamir           ###   ########.fr       */
+/*   Updated: 2022/03/30 13:31:22 by mbenkhat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,15 @@ int		is_var(char	**local_env, char *var);
 char	**unset_var(char *var_name, char **local_env);
 char	**export(char	**local_env, t_minishell *minish);
 char	**unset(char	**local_env, t_minishell *minish);
-int		pipe_hand(t_minishell *minish, char *input);
+int		pipe_hand(t_minishell *minish, char *input, int x);
 int		redirections_check(t_minishell *minish);
+
+// metacharachters
+int		metacharacters(char *input, t_minishell *minish);
+void	redirect_output();
+void	redirect_append();
+void	delimiter_input();
+void	redirect_input();
+void	parce_error();
 
 #endif

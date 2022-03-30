@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_var.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: mbenkhat <mbenkhat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 16:57:23 by tnamir            #+#    #+#             */
-/*   Updated: 2022/03/29 18:39:11 by tnamir           ###   ########.fr       */
+/*   Updated: 2022/03/30 13:20:49 by mbenkhat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ char	*var_handler(char *buff, char *str, t_minishell *minish, int *x)
 	char	*var;
 
 	*x += 1;
-	if (str[*x] == '\'' || str[*x] == '\"' || str[*x] == ' ' || !str[*x])
+	if (str[*x] == ' ' || !str[*x])
 		buff = ft_charjoin(buff, '$');
 	else if (str[*x] == '?')
 	{

@@ -6,7 +6,7 @@
 /*   By: mbenkhat <mbenkhat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:30:16 by tnamir            #+#    #+#             */
-/*   Updated: 2022/03/29 16:43:58 by mbenkhat         ###   ########.fr       */
+/*   Updated: 2022/03/30 10:47:56 by mbenkhat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	conditions(t_minishell *minishell,
 	char	*input)
 {
 	minishell->options = quotes_presence(input, minishell);
-	redirections_check(minishell);
+	// redirections_check(minishell);
 	minishell->prompt = CYAN"💀 Minishell ➤\033[0m";
 	if (!ft_strncmp(minishell->options[0], "exit", 5))
 		minishell->exita = 1;
@@ -78,7 +78,7 @@ static void	wanna_be_main(t_minishell *minishell)
 		if (add_history(input))
 			perror("error ");
 		input = rm_early_sp(rm_late_sp(input));
-		if (!pipe_hand(minishell, input))
+		if (!metacharacters(input, minishell))
 			conditions(minishell, input);
 		free(input);
 	}

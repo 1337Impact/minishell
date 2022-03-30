@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: mbenkhat <mbenkhat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 17:04:25 by tnamir            #+#    #+#             */
-/*   Updated: 2022/03/29 14:09:42 by tnamir           ###   ########.fr       */
+/*   Updated: 2022/03/30 13:49:27 by mbenkhat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	execute(char *cmd, t_minishell *minish, char **argv)
 		if (execve(cmd, argv, minish->local_env) == -1)
 		{
 			minish->exit_status = errno;
-			perror("error ");
+			perror("error r");
 		}
 	}
 	else
