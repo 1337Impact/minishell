@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbenkhat <mbenkhat@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 17:04:25 by tnamir            #+#    #+#             */
-/*   Updated: 2022/03/31 10:53:57 by mbenkhat         ###   ########.fr       */
+/*   Updated: 2022/03/31 17:14:51 by tnamir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ static void	fd_hand(t_minishell *minish)
 void	execute(char *cmd, t_minishell *minish, char **argv)
 {
 	minish->exit_status = 0;
+	printf("%d", minish->r_fd);
+	printf("\n%d", minish->w_fd);
 	if (cmd[0] != '/' && cmd[0] != '.')
 		cmd = valid_cmd(minish, cmd);
 	if (!cmd)

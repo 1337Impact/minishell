@@ -6,7 +6,7 @@
 /*   By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 09:52:37 by mbenkhat          #+#    #+#             */
-/*   Updated: 2022/03/31 14:56:28 by tnamir           ###   ########.fr       */
+/*   Updated: 2022/03/31 17:12:21 by tnamir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,6 @@ char	*redirect_append(t_minishell *minish, char *input, int x)
 	input += x + 2;
 	file_name = one_file_input(rm_late_sp(rm_early_sp(input)));
 	file_name = quotes_handler(ft_substr(file_name, 0, check_metacharacters(file_name)), minish);
-	printf("%s", file_name);
 	minish->w_fd = open(file_name, O_RDWR | O_APPEND | O_CREAT , S_IRWXU);
 	if (minish->w_fd == -1)
 	{
@@ -113,14 +112,34 @@ char	*redirect_append(t_minishell *minish, char *input, int x)
 char	*delimiter_input(t_minishell *minish, char *input, int x)
 {
 	char	*cmd;
-	char	*file_name;
+	char	*delimiter;
+	char	*rd_input;
 
 	cmd = ft_substr(input, 0, x - 1);
 	input += x + 2;
-	file_name = one_file_input(rm_late_sp(rm_early_sp(input)));
-	file_name = quotes_handler(ft_substr(file_name, 0, check_metacharacters(file_name)), minish);
-}
-void	parse_error()
-{
-	printf("parse_error\n");
+	delimiter = one_file_input(rm_late_sp(rm_early_sp(input)));
+	delimiter = quotes_handler(ft_substr(delimiter, 0, check_metacharacters(delimiter)), minish);
+	rd_input = NULL;
+	minish->r_fd = open("/Users/tnamir/Desktop/minishell/files/tmp", O_RDWR | O_APPEND | O_CREAT | O_TRUNC, S_IRWXU);
+	if (minish->r_fd == -1)
+	{
+		print_error("minishell : error while processing the read file", NULL, minish, 1);
+		return (0);
+	}
+	rd_input = readline("heredoc> ");
+	while (ft_strncmp(rd_input, delimiter, ft_strlen(delimiter)))
+	{
+		ft_putendl_fd(rd_input, minish->r_fd);
+		free(rd_input);
+		rd_input = readline("heredoc> ");
+	}
+	free(rd_input);
+	minish->p = 3;
+	printf("%s", cmd);
+	conditions(minish, cmd);
+	close(minish->r_fd);
+	x = check_metacharacters(input);
+	if (!input[x])
+		return (0);
+	return(ft_strjoin(cmd, input + x));
 }

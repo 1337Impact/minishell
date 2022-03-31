@@ -6,7 +6,7 @@
 /*   By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/06 12:58:42 by tnamir            #+#    #+#             */
-/*   Updated: 2022/03/18 13:00:50 by tnamir           ###   ########.fr       */
+/*   Updated: 2022/03/31 16:15:21 by tnamir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*ft_strjoin(char const	*s1, char const	*s2)
 
 	y = 0;
 	x = 0;
-	if (s1 != 0 && s2 != 0)
+	if (s1 != 0 || s2 != 0)
 	{
 		p = malloc((ft_strlen(s1) + ft_strlen(s2)) * sizeof(char) + 1);
 		if (p == NULL)

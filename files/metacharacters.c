@@ -6,7 +6,7 @@
 /*   By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 08:57:42 by mbenkhat          #+#    #+#             */
-/*   Updated: 2022/03/31 14:54:32 by tnamir           ###   ########.fr       */
+/*   Updated: 2022/03/31 16:45:15 by tnamir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int	metacharacters(char *input, t_minishell *minish)
 			return (1);
 		}
 		if (!x)
-			parse_error();
+			print_error("minishell: parse error", NULL, minish, 130);
 		else if (input[x] == '>' && input[x - 1] == '>')
 		{
 			input = redirect_append(minish, input, x);
@@ -93,7 +93,7 @@ int	metacharacters(char *input, t_minishell *minish)
 		}
 		else if (input[x] == '<' && input[x - 1] == '<')
 		{
-			delimiter_input(minish, input, x);
+			input = delimiter_input(minish, input, x);
 			if (!input)
 				return (1);
 			x = -1;

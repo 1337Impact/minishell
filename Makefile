@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mbenkhat <mbenkhat@student.42.fr>          +#+  +:+       +#+         #
+#    By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/15 16:38:27 by tnamir            #+#    #+#              #
-#    Updated: 2022/03/30 10:42:56 by mbenkhat         ###   ########.fr        #
+#    Updated: 2022/03/31 17:16:47 by tnamir           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,7 @@ $(LIBFT) :
 	@$(MAKE) -C ./libft
 
 clean :
-	@rm -rf ./libft/*.o $(OBJS)
+	@rm -rf ./libft/*.o $(OBJS) ./files/tmp
 
 fclean : clean
 	@rm -rf $(LIBFT) $(NAME)
