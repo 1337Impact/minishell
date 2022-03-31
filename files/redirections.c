@@ -6,7 +6,7 @@
 /*   By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 09:52:37 by mbenkhat          #+#    #+#             */
-/*   Updated: 2022/03/31 14:51:57 by tnamir           ###   ########.fr       */
+/*   Updated: 2022/03/31 14:56:28 by tnamir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,9 +109,16 @@ char	*redirect_append(t_minishell *minish, char *input, int x)
 		return (0);
 	return(ft_strjoin(cmd, input + x));
 }
-void	delimiter_input()
+
+char	*delimiter_input(t_minishell *minish, char *input, int x)
 {
-	printf("delimiter_input\n");
+	char	*cmd;
+	char	*file_name;
+
+	cmd = ft_substr(input, 0, x - 1);
+	input += x + 2;
+	file_name = one_file_input(rm_late_sp(rm_early_sp(input)));
+	file_name = quotes_handler(ft_substr(file_name, 0, check_metacharacters(file_name)), minish);
 }
 void	parse_error()
 {

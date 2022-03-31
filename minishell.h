@@ -6,7 +6,7 @@
 /*   By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:32:40 by tnamir            #+#    #+#             */
-/*   Updated: 2022/03/31 14:21:58 by tnamir           ###   ########.fr       */
+/*   Updated: 2022/03/31 14:54:10 by tnamir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,16 +62,16 @@ int		is_var(char	**local_env, char *var);
 char	**unset_var(char *var_name, char **local_env);
 char	**export(char	**local_env, t_minishell *minish);
 char	**unset(char	**local_env, t_minishell *minish);
-int		pipe_hand(t_minishell *minish, char *input, int x);
-int		redirections_check(t_minishell *minish);
 
 // metacharachters
 int		metacharacters(char *input, t_minishell *minish);
+int		pipe_hand(t_minishell *minish, char *input, int x);
+int		redirections_check(t_minishell *minish);
 int		check_metacharacters(char *input);
 char	*redirect_output(t_minishell *minish, char *input, int x);
 char	*redirect_input(t_minishell *minish, char *input, int x);
 char	*redirect_append(t_minishell *minish, char *input, int x);
-void	delimiter_input();
+char	*delimiter_input(t_minishell *minish, char *input, int x);
 void	parse_error();
 
 // error handler
