@@ -6,7 +6,7 @@
 /*   By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:32:40 by tnamir            #+#    #+#             */
-/*   Updated: 2022/03/31 12:14:51 by tnamir           ###   ########.fr       */
+/*   Updated: 2022/03/31 14:21:58 by tnamir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int		metacharacters(char *input, t_minishell *minish);
 int		check_metacharacters(char *input);
 char	*redirect_output(t_minishell *minish, char *input, int x);
 char	*redirect_input(t_minishell *minish, char *input, int x);
-void	redirect_append();
+char	*redirect_append(t_minishell *minish, char *input, int x);
 void	delimiter_input();
 void	parse_error();
 
