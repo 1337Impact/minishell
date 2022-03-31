@@ -6,7 +6,7 @@
 /*   By: mbenkhat <mbenkhat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:32:40 by tnamir            #+#    #+#             */
-/*   Updated: 2022/03/31 10:28:24 by mbenkhat         ###   ########.fr       */
+/*   Updated: 2022/03/31 11:42:35 by mbenkhat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,5 +73,8 @@ void	redirect_append();
 void	delimiter_input();
 void	redirect_input();
 void	parse_error();
+
+// error handler
+void	print_error(char *str1, char *str2, t_minishell *minish, int val);
 
 #endif
