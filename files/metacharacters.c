@@ -6,7 +6,7 @@
 /*   By: mbenkhat <mbenkhat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 08:57:42 by mbenkhat          #+#    #+#             */
-/*   Updated: 2022/03/30 16:07:23 by mbenkhat         ###   ########.fr       */
+/*   Updated: 2022/03/31 10:53:00 by mbenkhat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,12 @@ int	metacharacters(char *input, t_minishell *minish)
 		else if (input[x] == '<' && input[x - 1] == '<')
 			delimiter_input();
 		else if (input[x] == '>')
-			redirect_output(minish, input, x);
+		{
+			input = redirect_output(minish, input, x);
+			if (!input)
+				return (1);
+			x = -1;
+		}
 		else if (input[x] == '<')
 			redirect_input();
 		else if (input[x] == '|')

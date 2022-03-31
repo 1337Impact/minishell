@@ -6,7 +6,7 @@
 /*   By: mbenkhat <mbenkhat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 16:41:40 by tnamir            #+#    #+#             */
-/*   Updated: 2022/03/30 08:43:21 by mbenkhat         ###   ########.fr       */
+/*   Updated: 2022/03/31 11:00:48 by mbenkhat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,16 @@ void	twod_free(char	**array)
 	while (array[++x])
 		free(array[x]);
 	free(array);
+}
+
+void	print_error(char *str1, char *str2, t_minishell *minish, int val)
+{
+	if (str2)
+	{
+		ft_putstr_fd(str1, 2);
+		ft_putendl_fd(str2, 2);
+	}
+	else
+		ft_putendl_fd(str1, 2);
+	minish->exit_status = val;
 }
