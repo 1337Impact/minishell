@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbenkhat <mbenkhat@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 09:52:37 by mbenkhat          #+#    #+#             */
-/*   Updated: 2022/03/31 12:00:56 by mbenkhat         ###   ########.fr       */
+/*   Updated: 2022/03/31 12:34:20 by tnamir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,30 @@ char	*redirect_output(t_minishell *minish, char *input, int x)
 	return(ft_strjoin(cmd, input + x));
 }
 
+char	*redirect_input(t_minishell *minish, char *input, int x)
+{
+	char	*cmd;
+	char	*file_name;
+	int		i;
+
+	i = 0;
+	cmd = ft_substr(input, 0, x);
+	while(input[i] != '<')
+		i++;
+	file_name = one_file_input(rm_late_sp(rm_early_sp(input + i + 1)));
+	file_name = quotes_handler(ft_substr(file_name, 0, check_metacharacters(file_name)), minish);
+	minish->r_fd = open(file_name, O_RDWR, S_IRWXU);
+	if (minish->r_fd == -1)
+	{
+		print_error("minishell : no such file or directory:", file_name, minish, 1);
+		return (0);
+	}
+	minish->p = 3;
+	conditions(minish, cmd);
+	close(minish->r_fd);
+	return (input + i + 1);
+}
+
 void	redirect_append()
 {
 	printf("redirect_append\n");
@@ -67,10 +91,6 @@ void	redirect_append()
 void	delimiter_input()
 {
 	printf("delimiter_input\n");
-}
-void	redirect_input()
-{
-	printf("redirect_input\n");
 }
 void	parse_error()
 {

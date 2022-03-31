@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbenkhat <mbenkhat@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:32:40 by tnamir            #+#    #+#             */
-/*   Updated: 2022/03/31 11:42:35 by mbenkhat         ###   ########.fr       */
+/*   Updated: 2022/03/31 12:14:51 by tnamir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,11 +67,11 @@ int		redirections_check(t_minishell *minish);
 
 // metacharachters
 int		metacharacters(char *input, t_minishell *minish);
-char	*redirect_output(t_minishell *minish, char *input, int x);
 int		check_metacharacters(char *input);
+char	*redirect_output(t_minishell *minish, char *input, int x);
+char	*redirect_input(t_minishell *minish, char *input, int x);
 void	redirect_append();
 void	delimiter_input();
-void	redirect_input();
 void	parse_error();
 
 // error handler

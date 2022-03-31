@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   metacharacters.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbenkhat <mbenkhat@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 08:57:42 by mbenkhat          #+#    #+#             */
-/*   Updated: 2022/03/31 12:03:08 by mbenkhat         ###   ########.fr       */
+/*   Updated: 2022/03/31 12:37:28 by tnamir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ int	metacharacters(char *input, t_minishell *minish)
 			x = -1;
 		}
 		else if (input[x] == '<')
-			redirect_input();
+			input = redirect_input(minish, input, x);
 		else if (input[x] == '|')
 		{
 			printf("%s--%d\n", input, x);
