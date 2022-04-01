@@ -6,7 +6,7 @@
 /*   By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:30:16 by tnamir            #+#    #+#             */
-/*   Updated: 2022/04/01 15:46:50 by tnamir           ###   ########.fr       */
+/*   Updated: 2022/04/01 16:25:32 by tnamir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ static void	wanna_be_main(t_minishell *minishell)
 		free(input);
 	}
 }
+
 
 int	main(int c, char **v, char **envp)
 {

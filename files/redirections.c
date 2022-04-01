@@ -6,7 +6,7 @@
 /*   By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 09:52:37 by mbenkhat          #+#    #+#             */
-/*   Updated: 2022/04/01 15:49:32 by tnamir           ###   ########.fr       */
+/*   Updated: 2022/04/01 16:52:55 by tnamir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,6 @@ char	*delimiter_input(t_minishell *minish, char *input, int x)
 	}
 	free(rd_input);
 	minish->p = 3;
-	printf("%s", cmd);
 	conditions(minish, cmd);
 	close(minish->r_fd);
 	x = check_metacharacters(input);
