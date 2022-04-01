@@ -6,7 +6,7 @@
 /*   By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 08:57:42 by mbenkhat          #+#    #+#             */
-/*   Updated: 2022/03/31 16:45:15 by tnamir           ###   ########.fr       */
+/*   Updated: 2022/04/01 16:05:08 by tnamir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,33 @@ int	check_metacharacters(char *input)
 	return (i);
 }
 
+static int	meta_conditions(char *input, t_minishell *minish, int *x)
+{
+	if (input[*x] == '>')
+	{
+		if (input[*x - 1] == '>')
+			input = redirect_append(minish, input, *x);
+		else
+			input = redirect_output(minish, input, *x);
+		if (!input)
+			return (1);
+		*x = -1;
+	}
+	else if (input[*x] == '<')
+	{
+		if (input[*x - 1] == '<')
+			input = delimiter_input(minish, input, *x);
+		else
+			input = redirect_input(minish, input, *x);
+		if (!input)
+			return (1);
+		*x = -1;
+	}
+	else if (input[*x] == '|')
+		pipe_hand(minish, input, *x);
+	return (0);
+}
+
 int	metacharacters(char *input, t_minishell *minish)
 {
 	int		x;
@@ -84,38 +111,8 @@ int	metacharacters(char *input, t_minishell *minish)
 		}
 		if (!x)
 			print_error("minishell: parse error", NULL, minish, 130);
-		else if (input[x] == '>' && input[x - 1] == '>')
-		{
-			input = redirect_append(minish, input, x);
-			if (!input)
-				return (1);
-			x = -1;
-		}
-		else if (input[x] == '<' && input[x - 1] == '<')
-		{
-			input = delimiter_input(minish, input, x);
-			if (!input)
-				return (1);
-			x = -1;
-		}
-		else if (input[x] == '>')
-		{
-			input = redirect_output(minish, input, x);
-			if (!input)
-				return (1);
-			x = -1;
-		}
-		else if (input[x] == '<')
-		{
-			input = redirect_input(minish, input, x);
-			if (!input)
-				return (1);
-			x = -1;
-		}
-		else if (input[x] == '|')
-		{
-			pipe_hand(minish, input, x);
-		}
+		else if (meta_conditions(input, minish, &x))
+			return (1);
 		input += x + 1;
 	}
 	return (1);

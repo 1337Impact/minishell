@@ -6,7 +6,7 @@
 /*   By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:32:40 by tnamir            #+#    #+#             */
-/*   Updated: 2022/03/31 14:54:10 by tnamir           ###   ########.fr       */
+/*   Updated: 2022/04/01 15:58:08 by tnamir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ char	*redirect_output(t_minishell *minish, char *input, int x);
 char	*redirect_input(t_minishell *minish, char *input, int x);
 char	*redirect_append(t_minishell *minish, char *input, int x);
 char	*delimiter_input(t_minishell *minish, char *input, int x);
-void	parse_error();
 
 // error handler
 void	print_error(char *str1, char *str2, t_minishell *minish, int val);

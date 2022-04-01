@@ -6,7 +6,7 @@
 /*   By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 09:52:37 by mbenkhat          #+#    #+#             */
-/*   Updated: 2022/03/31 17:12:21 by tnamir           ###   ########.fr       */
+/*   Updated: 2022/04/01 15:49:32 by tnamir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,13 @@ char	*redirect_output(t_minishell *minish, char *input, int x)
 	cmd = ft_substr(input, 0, x);
 	input += x + 1;
 	file_name = one_file_input(rm_late_sp(rm_early_sp(input)));
-	file_name = quotes_handler(ft_substr(file_name, 0, check_metacharacters(file_name)), minish);
+	file_name = quotes_handler(ft_substr(file_name, 0,
+				check_metacharacters(file_name)), minish);
 	minish->w_fd = open(file_name, O_RDWR | O_CREAT | O_TRUNC, S_IRWXU);
 	if (minish->w_fd == -1)
 	{
-		print_error("minishell : no such file or directory:", file_name, minish, 1);
+		print_error("minishell : no such file or directory:",
+			file_name, minish, 1);
 		return (0);
 	}
 	minish->p = 1;
@@ -57,7 +59,7 @@ char	*redirect_output(t_minishell *minish, char *input, int x)
 	x = check_metacharacters(input);
 	if (!input[x])
 		return (0);
-	return(ft_strjoin(cmd, input + x));
+	return (ft_strjoin(cmd, input + x));
 }
 
 char	*redirect_input(t_minishell *minish, char *input, int x)
@@ -68,11 +70,13 @@ char	*redirect_input(t_minishell *minish, char *input, int x)
 	cmd = ft_substr(input, 0, x);
 	input += x + 1;
 	file_name = one_file_input(rm_late_sp(rm_early_sp(input)));
-	file_name = quotes_handler(ft_substr(file_name, 0, check_metacharacters(file_name)), minish);
+	file_name = quotes_handler(ft_substr(file_name, 0,
+				check_metacharacters(file_name)), minish);
 	minish->r_fd = open(file_name, O_RDWR, S_IRWXU);
 	if (minish->r_fd == -1)
 	{
-		print_error("minishell : no such file or directory:", file_name, minish, 1);
+		print_error("minishell : no such file or directory:",
+			file_name, minish, 1);
 		return (0);
 	}
 	minish->p = 3;
@@ -82,7 +86,7 @@ char	*redirect_input(t_minishell *minish, char *input, int x)
 	if (!input[x])
 		return (0);
 	minish->p = 3;
-	return(ft_strjoin(cmd, input + x));
+	return (ft_strjoin(cmd, input + x));
 }
 
 char	*redirect_append(t_minishell *minish, char *input, int x)
@@ -93,11 +97,13 @@ char	*redirect_append(t_minishell *minish, char *input, int x)
 	cmd = ft_substr(input, 0, x - 1);
 	input += x + 2;
 	file_name = one_file_input(rm_late_sp(rm_early_sp(input)));
-	file_name = quotes_handler(ft_substr(file_name, 0, check_metacharacters(file_name)), minish);
-	minish->w_fd = open(file_name, O_RDWR | O_APPEND | O_CREAT , S_IRWXU);
+	file_name = quotes_handler(ft_substr(file_name, 0,
+				check_metacharacters(file_name)), minish);
+	minish->w_fd = open(file_name, O_RDWR | O_APPEND | O_CREAT, S_IRWXU);
 	if (minish->w_fd == -1)
 	{
-		print_error("minishell : no such file or directory:", file_name, minish, 1);
+		print_error("minishell : no such file or directory:",
+			file_name, minish, 1);
 		return (0);
 	}
 	minish->p = 1;
@@ -106,7 +112,7 @@ char	*redirect_append(t_minishell *minish, char *input, int x)
 	x = check_metacharacters(input);
 	if (!input[x])
 		return (0);
-	return(ft_strjoin(cmd, input + x));
+	return (ft_strjoin(cmd, input + x));
 }
 
 char	*delimiter_input(t_minishell *minish, char *input, int x)
@@ -118,12 +124,15 @@ char	*delimiter_input(t_minishell *minish, char *input, int x)
 	cmd = ft_substr(input, 0, x - 1);
 	input += x + 2;
 	delimiter = one_file_input(rm_late_sp(rm_early_sp(input)));
-	delimiter = quotes_handler(ft_substr(delimiter, 0, check_metacharacters(delimiter)), minish);
+	delimiter = quotes_handler(ft_substr(delimiter, 0,
+				check_metacharacters(delimiter)), minish);
 	rd_input = NULL;
-	minish->r_fd = open("/Users/tnamir/Desktop/minishell/files/tmp", O_RDWR | O_APPEND | O_CREAT | O_TRUNC, S_IRWXU);
+	minish->r_fd = open("/Users/tnamir/Desktop/minishell/files/tmp",
+			O_RDWR | O_APPEND | O_CREAT | O_TRUNC, S_IRWXU);
 	if (minish->r_fd == -1)
 	{
-		print_error("minishell : error while processing the read file", NULL, minish, 1);
+		print_error("minishell : error while processing the read file",
+			NULL, minish, 1);
 		return (0);
 	}
 	rd_input = readline("heredoc> ");
@@ -141,5 +150,5 @@ char	*delimiter_input(t_minishell *minish, char *input, int x)
 	x = check_metacharacters(input);
 	if (!input[x])
 		return (0);
-	return(ft_strjoin(cmd, input + x));
+	return (ft_strjoin(cmd, input + x));
 }
