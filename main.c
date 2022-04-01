@@ -6,7 +6,7 @@
 /*   By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:30:16 by tnamir            #+#    #+#             */
-/*   Updated: 2022/04/01 16:25:32 by tnamir           ###   ########.fr       */
+/*   Updated: 2022/04/01 18:57:44 by tnamir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,9 +81,15 @@ static void	wanna_be_main(t_minishell *minishell)
 		if (!metacharacters(input, minishell))
 			conditions(minishell, input);
 		free(input);
+		twod_free(minishell->options);
 	}
 }
 
+// void	sig_hand(int sig)
+// {
+// 	if (sig == SIGINT)
+		
+// }
 
 int	main(int c, char **v, char **envp)
 {
@@ -92,6 +98,7 @@ int	main(int c, char **v, char **envp)
 
 	(void)c;
 	(void)v;
+	// signal()
 	minishell.local_env = malloc((twod_array_len(envp) + 1) * sizeof(char *));
 	i = -1;
 	while (envp[++i])
@@ -101,5 +108,6 @@ int	main(int c, char **v, char **envp)
 	minishell.exit_status = 0;
 	minishell.p = 0;
 	wanna_be_main(&minishell);
-	return (0);
+	twod_free(minishell.local_env);
+	return (minishell.exit_status);
 }
