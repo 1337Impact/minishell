@@ -6,7 +6,7 @@
 #    By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/15 16:38:27 by tnamir            #+#    #+#              #
-#    Updated: 2022/03/31 17:16:47 by tnamir           ###   ########.fr        #
+#    Updated: 2022/04/02 14:56:11 by tnamir           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,7 @@ $(LIBFT) :
 	@$(MAKE) -C ./libft
 
 clean :
-	@rm -rf ./libft/*.o $(OBJS) ./files/tmp
+	@rm -rf ./libft/*.o $(OBJS)
 
 fclean : clean
 	@rm -rf $(LIBFT) $(NAME)

@@ -6,7 +6,7 @@
 /*   By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 17:04:25 by tnamir            #+#    #+#             */
-/*   Updated: 2022/04/01 16:28:17 by tnamir           ###   ########.fr       */
+/*   Updated: 2022/04/02 15:48:08 by tnamir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static void	fd_hand(t_minishell *minish)
 		dup2(minish->r_fd, 0);
 		close(minish->r_fd);
 	}
-	dup2(minish->w_fd, 1);
+	// dup2(minish->w_fd, 1);
 	if (minish->p == 3 || minish->p == 2)
 		dup2(minish->r_fd, 0);
 }

@@ -6,11 +6,15 @@
 /*   By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:30:16 by tnamir            #+#    #+#             */
-/*   Updated: 2022/04/01 18:57:44 by tnamir           ###   ########.fr       */
+/*   Updated: 2022/04/02 13:59:29 by tnamir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	init_prompt(void);
+
+int	g_sig = 0;
 
 static int	tab_sp_check(char	*input)
 {
@@ -56,6 +60,7 @@ void	conditions(t_minishell *minishell,
 	}
 	else
 		more_conditions(minishell);
+	twod_free(minishell->options);
 }
 
 static void	wanna_be_main(t_minishell *minishell)
@@ -81,28 +86,44 @@ static void	wanna_be_main(t_minishell *minishell)
 		if (!metacharacters(input, minishell))
 			conditions(minishell, input);
 		free(input);
-		twod_free(minishell->options);
 	}
 }
 
-// void	sig_hand(int sig)
-// {
-// 	if (sig == SIGINT)
-		
-// }
-
-int	main(int c, char **v, char **envp)
+void	sig_hand(int sig)
 {
-	t_minishell	minishell;
-	int			i;
+	int	pid;
+	
+	if (sig == SIGINT)
+	{
+		pid = fork();
+		if (!pid)
+		{
+			ft_putchar_fd('\n', 1);
+			init_prompt();
+		}
+		else
+		{
+			if (g_sig == 0)
+			{
+				g_sig = 1;
+				wait(0);
+				exit(0);
+			}
+		}
+	}
+}
 
-	(void)c;
-	(void)v;
-	// signal()
-	minishell.local_env = malloc((twod_array_len(envp) + 1) * sizeof(char *));
+int	init_prompt(void)
+{
+	t_minishell		minishell;
+	int				i;
+	extern char** 	environ;
+
+	g_sig = 0;
+	minishell.local_env = malloc((twod_array_len(environ) + 1) * sizeof(char *));
 	i = -1;
-	while (envp[++i])
-		minishell.local_env[i] = ft_strdup(envp[i]);
+	while (environ[++i])
+		minishell.local_env[i] = ft_strdup(environ[i]);
 	minishell.local_env[i] = 0;
 	minishell.prompt = CYAN"💀 Minishell ➤\033[0m";
 	minishell.exit_status = 0;
@@ -110,4 +131,11 @@ int	main(int c, char **v, char **envp)
 	wanna_be_main(&minishell);
 	twod_free(minishell.local_env);
 	return (minishell.exit_status);
+}
+
+int	main()
+{
+	signal(SIGINT, sig_hand);
+	init_prompt();
+	return (0);
 }

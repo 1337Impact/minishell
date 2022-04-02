@@ -6,7 +6,7 @@
 /*   By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 09:52:37 by mbenkhat          #+#    #+#             */
-/*   Updated: 2022/04/01 16:52:55 by tnamir           ###   ########.fr       */
+/*   Updated: 2022/04/02 15:52:22 by tnamir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,25 +120,20 @@ char	*delimiter_input(t_minishell *minish, char *input, int x)
 	char	*cmd;
 	char	*delimiter;
 	char	*rd_input;
+	int		fd[2];
 
 	cmd = ft_substr(input, 0, x - 1);
-	input += x + 2;
+	input += x + 1;
 	delimiter = one_file_input(rm_late_sp(rm_early_sp(input)));
 	delimiter = quotes_handler(ft_substr(delimiter, 0,
 				check_metacharacters(delimiter)), minish);
 	rd_input = NULL;
-	minish->r_fd = open("/Users/tnamir/Desktop/minishell/files/tmp",
-			O_RDWR | O_APPEND | O_CREAT | O_TRUNC, S_IRWXU);
-	if (minish->r_fd == -1)
-	{
-		print_error("minishell : error while processing the read file",
-			NULL, minish, 1);
-		return (0);
-	}
+	pipe(fd);
+	minish->r_fd = fd[0];
 	rd_input = readline("heredoc> ");
 	while (ft_strncmp(rd_input, delimiter, ft_strlen(delimiter)))
 	{
-		ft_putendl_fd(rd_input, minish->r_fd);
+		ft_putendl_fd(rd_input, fd[1]);
 		free(rd_input);
 		rd_input = readline("heredoc> ");
 	}
@@ -146,6 +141,7 @@ char	*delimiter_input(t_minishell *minish, char *input, int x)
 	minish->p = 3;
 	conditions(minish, cmd);
 	close(minish->r_fd);
+	close(fd[1]);
 	x = check_metacharacters(input);
 	if (!input[x])
 		return (0);
