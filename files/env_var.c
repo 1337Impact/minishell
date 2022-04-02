@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_var.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbenkhat <mbenkhat@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 16:57:23 by tnamir            #+#    #+#             */
-/*   Updated: 2022/03/30 13:20:49 by mbenkhat         ###   ########.fr       */
+/*   Updated: 2022/04/02 16:42:20 by tnamir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,12 @@ static char	*var_name(char	*str, int	*x)
 
 	i = 0;
 	while (str[i] && str[i] != ' ' && str[i] != '\"'
-		&& str[i] != '$' && str[i] != '/')
+		&& str[i] != '$' && str[i] != '/' && str[i] != '\'')
 		i++;
 	p = malloc(i + 1);
 	i = 0;
 	while (str[i] && str[i] != ' ' && str[i] != '\"'
-		&& str[i] != '$' && str[i] != '/')
+		&& str[i] != '$' && str[i] != '/' && str[i] != '\'')
 	{
 		p[i] = str[i];
 		i++;

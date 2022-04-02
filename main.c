@@ -6,7 +6,7 @@
 /*   By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:30:16 by tnamir            #+#    #+#             */
-/*   Updated: 2022/04/02 13:59:29 by tnamir           ###   ########.fr       */
+/*   Updated: 2022/04/02 18:46:12 by tnamir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,25 +91,17 @@ static void	wanna_be_main(t_minishell *minishell)
 
 void	sig_hand(int sig)
 {
-	int	pid;
-	
 	if (sig == SIGINT)
 	{
-		pid = fork();
-		if (!pid)
+		if (g_sig == 0)
 		{
 			ft_putchar_fd('\n', 1);
-			init_prompt();
+			ft_putstr_fd(RED"💀 Minishell ➤\033[0m", 1);
 		}
-		else
-		{
-			if (g_sig == 0)
-			{
-				g_sig = 1;
-				wait(0);
-				exit(0);
-			}
-		}
+		// if (g_sig == 1)
+		// {
+		// 	ft_putstr_fd("\b\b", 1);
+		// }
 	}
 }
 
