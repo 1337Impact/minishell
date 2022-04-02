@@ -6,7 +6,7 @@
 /*   By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 09:52:37 by mbenkhat          #+#    #+#             */
-/*   Updated: 2022/04/02 15:58:01 by tnamir           ###   ########.fr       */
+/*   Updated: 2022/04/02 19:12:27 by tnamir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,3 +147,6 @@ char	*delimiter_input(t_minishell *minish, char *input, int x)
 		return (0);
 	return (ft_strjoin(cmd, input + x));
 }
+
+
+//ARGS CAN BE AFTER NAME FILE IN REDIRECIONS

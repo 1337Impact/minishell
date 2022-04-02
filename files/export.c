@@ -6,7 +6,7 @@
 /*   By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 12:05:27 by tnamir            #+#    #+#             */
-/*   Updated: 2022/03/28 17:58:13 by tnamir           ###   ########.fr       */
+/*   Updated: 2022/04/02 19:06:10 by tnamir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ char	**export(char	**local_env, t_minishell *minish)
 		if (valid_var_name(minish->options[y], minish)
 			|| !ft_strchr(minish->options[y], '='))
 			continue ;
+	write(1, "hi\n", 3);
 		new_env = malloc((twod_array_len(local_env) + 2) * sizeof(char *));
 		x = -1;
 		while (local_env[++x])
