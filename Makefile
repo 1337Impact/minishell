@@ -6,7 +6,7 @@
 #    By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/15 16:38:27 by tnamir            #+#    #+#              #
-#    Updated: 2022/04/02 14:56:11 by tnamir           ###   ########.fr        #
+#    Updated: 2022/04/03 14:03:41 by tnamir           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ FLAGS = -Wall -Wextra -Werror
 
 SRC = main.c ./files/execute.c ./files/f_or_d.c ./files/sp_remover.c ./files/quotes_handler.c ./files/builtins_cmds.c \
  ./files/utils.c ./files/env_var.c ./files/cpy.c ./files/export.c ./files/unset.c ./files/pipes.c ./files/redirections.c \
- ./files/metacharacters.c
+ ./files/metacharacters.c ./files/conditions.c
 NAME = minishell
 
 LIBFT = ./libft/libft.a
@@ -45,7 +45,7 @@ fclean : clean
 re : fclean all
 
 c : all clean
-	./minishell
+	@./minishell
 
 .PHONY : clean fclean re
 
