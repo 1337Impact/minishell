@@ -6,7 +6,7 @@
 /*   By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 09:52:37 by mbenkhat          #+#    #+#             */
-/*   Updated: 2022/04/12 14:54:57 by tnamir           ###   ########.fr       */
+/*   Updated: 2022/04/12 17:49:27 by tnamir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,15 @@ char	*redirect_output(t_minishell *minish, char *input, int x)
 {
 	char	*cmd;
 	char	*file_name;
+	char	*hold_name;
 
 	cmd = ft_substr(input, 0, x);
-	printf("****%s****\n", input);
 	input += x + 1;
 	file_name = one_file_input(rm_late_sp(rm_early_sp(input)));
-	file_name = quotes_handler(ft_substr(file_name, 0,
-				check_metacharacters(file_name)), minish);
+	hold_name = ft_substr(file_name, 0, check_metacharacters(file_name));
+	free(file_name);
+	file_name = quotes_handler(hold_name, minish);
+	free(hold_name);
 	minish->w_fd = open(file_name, O_RDWR | O_CREAT | O_TRUNC, S_IRWXU);
 	if (minish->w_fd == -1)
 	{
@@ -57,7 +59,6 @@ char	*redirect_output(t_minishell *minish, char *input, int x)
 	minish->p = 1;
 	conditions(minish, cmd);
 	close(minish->w_fd);
-	x++;
 	x = check_metacharacters(input);
 	if (!input[x])
 		return (0);

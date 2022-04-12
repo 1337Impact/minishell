@@ -6,7 +6,7 @@
 /*   By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 08:57:42 by mbenkhat          #+#    #+#             */
-/*   Updated: 2022/04/12 14:41:05 by tnamir           ###   ########.fr       */
+/*   Updated: 2022/04/12 18:00:45 by tnamir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	check_metacharacters(char *input)
 	return (i);
 }
 
-/////// while x + 1 to increment input after to let it pass spaces
+///// while x + 1 to increment input after to let it pass spaces
 
 void	pipex(char *input, t_minishell *minish, int *x)
 {
@@ -72,38 +72,11 @@ void	pipex(char *input, t_minishell *minish, int *x)
 		*x += 1;
 }
 
-static int	meta_conditions(char *input, t_minishell *minish, int *x)
-{
-	if (input[*x] == '>')
-	{
-		if (input[*x - 1] == '>')
-			input = redirect_append(minish, input, *x);
-		else
-			input = redirect_output(minish, input, *x);
-		if (!input)
-			return (1);
-		*x = -1;
-	}
-	else if (input[*x] == '<')
-	{
-		if (input[*x - 1] == '<')
-			input = delimiter_input(minish, input, *x);
-		else
-			input = redirect_input(minish, input, *x);
-		if (!input)
-			return (1);
-		*x = -1;
-	}
-	else if (input[*x] == '|')
-		pipex(input, minish, x);
-	return (0);
-}
-
 int	metacharacters(char *input, t_minishell *minish)
 {
 	int		x;
 
-	input = rm_early_sp(rm_late_sp(input));
+	(void)minish;
 	x = check_metacharacters(input);
 	if (!input[x])
 		return (0);
@@ -120,10 +93,29 @@ int	metacharacters(char *input, t_minishell *minish)
 		}
 		if (!x)
 			print_error("minishell: parse error", NULL, minish, 130);
-		else if (meta_conditions(input, minish, &x))
-			return (1);
+		else if (input[x] == '>')
+		{
+			if (input[x] == '>' && input[x - 1] == '>')
+				input = redirect_append(minish, input, x);
+			else
+				input = redirect_output(minish, input, x);
+			if (!input)
+				return (1);
+			x = -1;
+		}
+		else if (input[x] == '<')
+		{
+			if (input[x] == '<' && input[x - 1] == '<')
+				input = delimiter_input(minish, input, x);
+			else
+				input = redirect_input(minish, input, x);
+			if (!input)
+				return (1);
+			x = -1;
+		}
+		else if (input[x] == '|')
+			pipex(input, minish, &x);
 		input += x + 1;
-		x++;
 	}
 	return (1);
 }
