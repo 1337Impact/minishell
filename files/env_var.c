@@ -6,13 +6,13 @@
 /*   By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 16:57:23 by tnamir            #+#    #+#             */
-/*   Updated: 2022/04/02 16:42:20 by tnamir           ###   ########.fr       */
+/*   Updated: 2022/04/08 23:45:54 by tnamir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static char	*var_value(char	*str, char	**env)
+char	*var_value(char	*str, char	**env)
 {
 	int		x;
 	int		len;

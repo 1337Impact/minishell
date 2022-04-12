@@ -6,11 +6,24 @@
 /*   By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 18:39:20 by tnamir            #+#    #+#             */
-/*   Updated: 2022/04/02 17:09:12 by tnamir           ###   ########.fr       */
+/*   Updated: 2022/04/09 09:06:52 by tnamir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+static	void	passing_stuff(int	*x, int	*sub_size, char *input);
+
+static void	from_norm_to_quote(int	*x, int	*sub_size, char *input)
+{
+	while (input[*x] && input[*x] != ' ')
+	{
+		*x += 1;
+		*sub_size += 1;
+		if (input[*x] == '\"' || input[*x] == '\"')
+			passing_stuff(x, sub_size, input);
+	}
+}
 
 static	void	passing_stuff(int	*x, int	*sub_size, char *input)
 {
@@ -18,7 +31,7 @@ static	void	passing_stuff(int	*x, int	*sub_size, char *input)
 	{
 		*x += 1;
 		*sub_size += 1;
-		while (input[*x] != '\'' && input[*x])
+		while (input[*x] && input[*x] != '\'')
 		{
 			*x += 1;
 			*sub_size += 1;
@@ -28,17 +41,13 @@ static	void	passing_stuff(int	*x, int	*sub_size, char *input)
 	{
 		*x += 1;
 		*sub_size += 1;
-		while (input[*x] != '\"' && input[*x])
+		while (input[*x] && input[*x] != '\"')
 		{
 			*x += 1;
 			*sub_size += 1;
 		}
 	}
-	while (input[*x] != ' ' && input[*x])
-	{
-		*x += 1;
-		*sub_size += 1;
-	}
+	from_norm_to_quote(x, sub_size, input);
 }
 
 char	**cpy_it(char	*input, char	**options)

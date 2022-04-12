@@ -6,7 +6,7 @@
 /*   By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 09:52:37 by mbenkhat          #+#    #+#             */
-/*   Updated: 2022/04/02 19:12:27 by tnamir           ###   ########.fr       */
+/*   Updated: 2022/04/12 14:54:57 by tnamir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ char	*redirect_output(t_minishell *minish, char *input, int x)
 	char	*file_name;
 
 	cmd = ft_substr(input, 0, x);
+	printf("****%s****\n", input);
 	input += x + 1;
 	file_name = one_file_input(rm_late_sp(rm_early_sp(input)));
 	file_name = quotes_handler(ft_substr(file_name, 0,
@@ -56,6 +57,7 @@ char	*redirect_output(t_minishell *minish, char *input, int x)
 	minish->p = 1;
 	conditions(minish, cmd);
 	close(minish->w_fd);
+	x++;
 	x = check_metacharacters(input);
 	if (!input[x])
 		return (0);
@@ -131,7 +133,7 @@ char	*delimiter_input(t_minishell *minish, char *input, int x)
 	pipe(fd);
 	minish->r_fd = fd[0];
 	rd_input = readline("heredoc> ");
-	while (ft_strncmp(rd_input, delimiter, ft_strlen(delimiter)))
+	while (ft_strncmp(rd_input, delimiter, ft_strlen(delimiter) + 1))
 	{
 		ft_putendl_fd(rd_input, fd[1]);
 		free(rd_input);
@@ -139,7 +141,7 @@ char	*delimiter_input(t_minishell *minish, char *input, int x)
 	}
 	free(rd_input);
 	minish->p = 3;
-	conditions(minish, cmd);
+	// conditions(minish, cmd);
 	close(minish->r_fd);
 	close(fd[1]);
 	x = check_metacharacters(input);
@@ -147,6 +149,4 @@ char	*delimiter_input(t_minishell *minish, char *input, int x)
 		return (0);
 	return (ft_strjoin(cmd, input + x));
 }
-
-
 //ARGS CAN BE AFTER NAME FILE IN REDIRECIONS

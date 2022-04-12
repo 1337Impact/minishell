@@ -6,7 +6,7 @@
 /*   By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 15:29:23 by tnamir            #+#    #+#             */
-/*   Updated: 2022/04/02 18:54:29 by tnamir           ###   ########.fr       */
+/*   Updated: 2022/04/09 08:01:33 by tnamir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,21 +27,22 @@ char	*ft_charjoin(char	*str, char c)
 	return (p);
 }
 
-// void	keep_handling(char *str, t_minishell *minish, char *buff, int *x)
-// {
-// 	*x += 1;
-// 	while (str[*x] && str[*x] != '\"')
-// 	{
-// 		if (str[*x] == '$')
-// 			buff = var_handler(buff, str, minish, x);
-// 		else
-// 		{
-// 			buff = ft_charjoin(buff, str[*x]);
-// 			*x += 1;
-// 		}
-// 	}
-// 	*x += 1;
-// }
+char	*double_quotes_handl(char *str, t_minishell *minish, char *buff, int *x)
+{
+	*x += 1;
+	while (str[*x] && str[*x] != '\"')
+	{
+		if (str[*x] == '$')
+			buff = var_handler(buff, str, minish, x);
+		else
+		{
+			buff = ft_charjoin(buff, str[*x]);
+			*x += 1;
+		}
+	}
+	*x += 1;
+	return (buff);
+}
 
 char	*quotes_handler(char *str, t_minishell *minish)
 {
@@ -62,20 +63,7 @@ char	*quotes_handler(char *str, t_minishell *minish)
 			x++;
 		}
 		else if (str[x] == '\"')
-		{
-			x += 1;
-			while (str[x] && str[x] != '\"')
-			{
-				if (str[x] == '$')
-					buff = var_handler(buff, str, minish, &x);
-				else
-				{
-					buff = ft_charjoin(buff, str[x]);
-					x += 1;
-				}
-			}
-			x += 1;
-		}
+			buff = double_quotes_handl(str, minish, buff, &x);
 		else
 			buff = ft_charjoin(buff, str[x++]);
 	}
@@ -92,9 +80,7 @@ char	**quotes_presence(char	*input, t_minishell	*minish)
 	while (minish->options[++i])
 	{
 		str = minish->options[i];
-		// printf("%s\n", str);
 		minish->options[i] = quotes_handler(minish->options[i], minish);
-		
 		free(str);
 	}
 	return (minish->options);
