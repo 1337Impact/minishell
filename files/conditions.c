@@ -6,7 +6,7 @@
 /*   By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/03 13:45:57 by tnamir            #+#    #+#             */
-/*   Updated: 2022/04/12 15:16:53 by tnamir           ###   ########.fr       */
+/*   Updated: 2022/04/13 13:41:26 by tnamir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ static void	more_conditions(t_minishell *minishell)
 void	conditions(t_minishell *minishell,
 	char	*input)
 {
+	input = (rm_early_sp(rm_late_sp(input)));
 	minishell->options = quotes_presence(input, minishell);
 	minishell->prompt = CYAN"💀 Minishell ➤\033[0m";
 	if (!ft_strncmp(minishell->options[0], "exit", 5))

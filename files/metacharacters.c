@@ -6,7 +6,7 @@
 /*   By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 08:57:42 by mbenkhat          #+#    #+#             */
-/*   Updated: 2022/04/12 18:00:45 by tnamir           ###   ########.fr       */
+/*   Updated: 2022/04/13 14:18:55 by tnamir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ int	metacharacters(char *input, t_minishell *minish)
 	int		x;
 
 	(void)minish;
+	input = (rm_early_sp(rm_late_sp(input)));
 	x = check_metacharacters(input);
 	if (!input[x])
 		return (0);

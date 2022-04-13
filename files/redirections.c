@@ -6,7 +6,7 @@
 /*   By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 09:52:37 by mbenkhat          #+#    #+#             */
-/*   Updated: 2022/04/12 17:49:27 by tnamir           ###   ########.fr       */
+/*   Updated: 2022/04/13 14:19:28 by tnamir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,19 @@ char	*one_file_input(char	*input)
 	return (ft_substr(input, 0, x));
 }
 
+char	*file_name_func(char *input, t_minishell *minish)
+{
+	char	*file_name;
+	char	*hold_name;
+
+	file_name = one_file_input(rm_late_sp(rm_early_sp(input)));
+	hold_name = ft_substr(file_name, 0, check_metacharacters(file_name));
+	free(file_name);
+	file_name = quotes_handler(hold_name, minish);
+	free(hold_name);
+	return (file_name);
+}
+
 char	*redirect_output(t_minishell *minish, char *input, int x)
 {
 	char	*cmd;
@@ -44,11 +57,7 @@ char	*redirect_output(t_minishell *minish, char *input, int x)
 
 	cmd = ft_substr(input, 0, x);
 	input += x + 1;
-	file_name = one_file_input(rm_late_sp(rm_early_sp(input)));
-	hold_name = ft_substr(file_name, 0, check_metacharacters(file_name));
-	free(file_name);
-	file_name = quotes_handler(hold_name, minish);
-	free(hold_name);
+	file_name = file_name_func(input, minish);
 	minish->w_fd = open(file_name, O_RDWR | O_CREAT | O_TRUNC, S_IRWXU);
 	if (minish->w_fd == -1)
 	{
@@ -58,6 +67,8 @@ char	*redirect_output(t_minishell *minish, char *input, int x)
 	}
 	minish->p = 1;
 	conditions(minish, cmd);
+	free(cmd);
+	free(file_name);
 	close(minish->w_fd);
 	x = check_metacharacters(input);
 	if (!input[x])
@@ -72,9 +83,7 @@ char	*redirect_input(t_minishell *minish, char *input, int x)
 
 	cmd = ft_substr(input, 0, x);
 	input += x + 1;
-	file_name = one_file_input(rm_late_sp(rm_early_sp(input)));
-	file_name = quotes_handler(ft_substr(file_name, 0,
-				check_metacharacters(file_name)), minish);
+	file_name = file_name_func(input, minish);
 	minish->r_fd = open(file_name, O_RDWR, S_IRWXU);
 	if (minish->r_fd == -1)
 	{
@@ -84,7 +93,11 @@ char	*redirect_input(t_minishell *minish, char *input, int x)
 	}
 	minish->p = 3;
 	conditions(minish, cmd);
+	free(cmd);
+	free(file_name);
 	close(minish->r_fd);
+	printf("\n\n\n****%s***\n", cmd);
+	printf("****%s***\n", input);
 	x = check_metacharacters(input);
 	if (!input[x])
 		return (0);
@@ -99,9 +112,7 @@ char	*redirect_append(t_minishell *minish, char *input, int x)
 
 	cmd = ft_substr(input, 0, x - 1);
 	input += x + 1;
-	file_name = one_file_input(rm_late_sp(rm_early_sp(input)));
-	file_name = quotes_handler(ft_substr(file_name, 0,
-				check_metacharacters(file_name)), minish);
+	file_name = file_name_func(input, minish);
 	minish->w_fd = open(file_name, O_RDWR | O_APPEND | O_CREAT, S_IRWXU);
 	if (minish->w_fd == -1)
 	{
@@ -111,6 +122,8 @@ char	*redirect_append(t_minishell *minish, char *input, int x)
 	}
 	minish->p = 1;
 	conditions(minish, cmd);
+	free(cmd);
+	free(file_name);
 	close(minish->w_fd);
 	x = check_metacharacters(input);
 	if (!input[x])
@@ -127,9 +140,7 @@ char	*delimiter_input(t_minishell *minish, char *input, int x)
 
 	cmd = ft_substr(input, 0, x - 1);
 	input += x + 1;
-	delimiter = one_file_input(rm_late_sp(rm_early_sp(input)));
-	delimiter = quotes_handler(ft_substr(delimiter, 0,
-				check_metacharacters(delimiter)), minish);
+	delimiter = file_name_func(input, minish);
 	rd_input = NULL;
 	pipe(fd);
 	minish->r_fd = fd[0];
@@ -143,6 +154,8 @@ char	*delimiter_input(t_minishell *minish, char *input, int x)
 	free(rd_input);
 	minish->p = 3;
 	// conditions(minish, cmd);
+	free(cmd);
+	free(delimiter);
 	close(minish->r_fd);
 	close(fd[1]);
 	x = check_metacharacters(input);
