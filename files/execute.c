@@ -6,7 +6,7 @@
 /*   By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 17:04:25 by tnamir            #+#    #+#             */
-/*   Updated: 2022/04/11 17:01:44 by tnamir           ###   ########.fr       */
+/*   Updated: 2022/04/13 16:21:39 by tnamir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,5 +102,6 @@ void	execute(char *cmd, t_minishell *minish, char **argv)
 	{
 		wait(&status);
 		minish->exit_status = WEXITSTATUS(status);
+		free(cmd);
 	}
 }

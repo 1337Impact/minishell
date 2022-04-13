@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbenkhat <mbenkhat@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 09:52:37 by mbenkhat          #+#    #+#             */
-/*   Updated: 2022/04/13 15:41:12 by mbenkhat         ###   ########.fr       */
+/*   Updated: 2022/04/13 16:41:22 by tnamir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,8 @@ char	*redirect_output(t_minishell *minish, char *input, int x)
 	minish->p = 1;
 	conditions(minish, cmd);
 	close(minish->w_fd);
-	x++;
+	free(cmd);
+	free(file_name);
 	x = check_metacharacters(input);
 	if (!input[x])
 		return (0);
@@ -83,6 +84,8 @@ char	*redirect_input(t_minishell *minish, char *input, int x)
 	minish->p = 3;
 	conditions(minish, cmd);
 	close(minish->r_fd);
+	free(cmd);
+	free(file_name);
 	x = check_metacharacters(input);
 	if (!input[x])
 		return (0);
@@ -97,7 +100,6 @@ char	*redirect_append(t_minishell *minish, char *input, int x)
 
 	cmd = ft_substr(input, 0, x);
 	input += x + 2;
-	printf("1**%s**\n", input);
 	file_name = one_file_input(rm_late_sp(rm_early_sp(input)));
 	file_name = quotes_handler(ft_substr(file_name, 0,
 				check_metacharacters(file_name)), minish);
@@ -111,8 +113,9 @@ char	*redirect_append(t_minishell *minish, char *input, int x)
 	minish->p = 1;
 	conditions(minish, cmd);
 	close(minish->w_fd);
+	free(cmd);
+	free(file_name);
 	x = check_metacharacters(input);
-	printf("2**%s**\n", input + x);
 	if (!input[x])
 		return (0);
 	return (ft_strjoin(cmd, input + x));
@@ -125,16 +128,15 @@ char	*delimiter_input(t_minishell *minish, char *input, int x)
 	char	*rd_input;
 	int		fd[2];
 
-	cmd = ft_substr(input, 0, x - 1);
-	input += x + 1;
+	cmd = ft_substr(input, 0, x);
+	input += x + 2;
 	delimiter = one_file_input(rm_late_sp(rm_early_sp(input)));
 	delimiter = quotes_handler(ft_substr(delimiter, 0,
 				check_metacharacters(delimiter)), minish);
-	rd_input = NULL;
 	pipe(fd);
 	minish->r_fd = fd[0];
 	rd_input = readline("heredoc> ");
-	while (ft_strncmp(rd_input, delimiter, ft_strlen(delimiter) + 1))
+	while (ft_strncmp(rd_input, delimiter, ft_strlen(rd_input) + 1))
 	{
 		ft_putendl_fd(rd_input, fd[1]);
 		free(rd_input);
@@ -142,12 +144,13 @@ char	*delimiter_input(t_minishell *minish, char *input, int x)
 	}
 	free(rd_input);
 	minish->p = 3;
-	// conditions(minish, cmd);
+	conditions(minish, cmd);
 	close(minish->r_fd);
 	close(fd[1]);
+	free(cmd);
+	free(delimiter);
 	x = check_metacharacters(input);
 	if (!input[x])
 		return (0);
 	return (ft_strjoin(cmd, input + x));
 }
-//ARGS CAN BE AFTER NAME FILE IN REDIRECIONS

@@ -55,7 +55,7 @@ static void	wanna_be_main(t_minishell *minishell)
 		input = readline(minishell->prompt);
 		if (!input)
 		{
-			ft_putstr_fd(RED"\b\b  \nexit 💀\033[0m", 1);
+			ft_putstr_fd(RED"\b\b  exit 💀\033[0m", 1);
 			break ;
 		}
 		if (tab_sp_check(input))
