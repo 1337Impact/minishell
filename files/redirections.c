@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: mbenkhat <mbenkhat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 09:52:37 by mbenkhat          #+#    #+#             */
-/*   Updated: 2022/04/12 14:54:57 by tnamir           ###   ########.fr       */
+/*   Updated: 2022/04/13 15:41:12 by mbenkhat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ char	*redirect_output(t_minishell *minish, char *input, int x)
 	char	*file_name;
 
 	cmd = ft_substr(input, 0, x);
-	printf("****%s****\n", input);
 	input += x + 1;
 	file_name = one_file_input(rm_late_sp(rm_early_sp(input)));
 	file_name = quotes_handler(ft_substr(file_name, 0,
@@ -96,8 +95,9 @@ char	*redirect_append(t_minishell *minish, char *input, int x)
 	char	*cmd;
 	char	*file_name;
 
-	cmd = ft_substr(input, 0, x - 1);
-	input += x + 1;
+	cmd = ft_substr(input, 0, x);
+	input += x + 2;
+	printf("1**%s**\n", input);
 	file_name = one_file_input(rm_late_sp(rm_early_sp(input)));
 	file_name = quotes_handler(ft_substr(file_name, 0,
 				check_metacharacters(file_name)), minish);
@@ -112,6 +112,7 @@ char	*redirect_append(t_minishell *minish, char *input, int x)
 	conditions(minish, cmd);
 	close(minish->w_fd);
 	x = check_metacharacters(input);
+	printf("2**%s**\n", input + x);
 	if (!input[x])
 		return (0);
 	return (ft_strjoin(cmd, input + x));

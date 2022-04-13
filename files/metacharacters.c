@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   metacharacters.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: mbenkhat <mbenkhat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 08:57:42 by mbenkhat          #+#    #+#             */
-/*   Updated: 2022/04/13 15:04:26 by tnamir           ###   ########.fr       */
+/*   Updated: 2022/04/13 15:48:06 by mbenkhat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,19 +46,9 @@ int	check_metacharacters(char *input)
 	i = get_metacharacters(input);
 	if (!input[i])
 		return (i);
-	if (input[i] == '>')
-	{
-		if (input[i + 1] == '>')
-			i++;
-	}
-	else if (input[i] == '<')
-	{
-		if (input[i + 1] == '<')
-			i++;
-	}
 	if (!(ft_isalnum(input[i + 1]) || input[i + 1] == '\''
 			|| input[i + 1] == '\"' || input[i + 1] == '$'
-			|| input[i + 1] == ' '))
+			|| input[i + 1] == ' '|| input[i + 1] == '>'|| input[i + 1] == '<'))
 		return (0);
 	return (i);
 }
@@ -95,7 +85,7 @@ int	metacharacters(char *input, t_minishell *minish)
 			print_error("minishell: parse error", NULL, minish, 130);
 		else if (input[x] == '>')
 		{
-			if (input[x] == '>' && input[x - 1] == '>')
+			if (input[x] == '>' && input[x + 1] == '>')
 				input = redirect_append(minish, input, x);
 			else
 				input = redirect_output(minish, input, x);
@@ -105,7 +95,7 @@ int	metacharacters(char *input, t_minishell *minish)
 		}
 		else if (input[x] == '<')
 		{
-			if (input[x] == '<' && input[x - 1] == '<')
+			if (input[x] == '<' && input[x + 1] == '<')
 				input = delimiter_input(minish, input, x);
 			else
 				input = redirect_input(minish, input, x);
