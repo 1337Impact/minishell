@@ -6,7 +6,7 @@
 /*   By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:32:40 by tnamir            #+#    #+#             */
-/*   Updated: 2022/04/11 16:14:43 by tnamir           ###   ########.fr       */
+/*   Updated: 2022/04/14 15:18:40 by tnamir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,5 +85,6 @@ void	errory(t_minishell *minish);
 void	print_export(t_minishell *minish);
 char	*var_value(char	*str, char	**env);
 char	*var_name_func(char *var);
+char	*one_file_input(char	*input);
 
 #endif

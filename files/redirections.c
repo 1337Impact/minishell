@@ -6,35 +6,11 @@
 /*   By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 09:52:37 by mbenkhat          #+#    #+#             */
-/*   Updated: 2022/04/14 00:03:07 by tnamir           ###   ########.fr       */
+/*   Updated: 2022/04/14 15:19:05 by tnamir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-char	*one_file_input(char	*input)
-{
-	int	x;
-
-	x = 0;
-	while (input[x] != ' ' && input[x])
-	{
-		if (input[x] == '\'')
-		{
-			x++;
-			while (input[x] != '\'')
-				x++;
-		}
-		else if (input[x] == '\"')
-		{
-			x++;
-			while (input[x] != '\"')
-				x++;
-		}
-		x++;
-	}
-	return (ft_substr(input, 0, x));
-}
 
 char	*redirect_output(t_minishell *minish, char *input, int x)
 {
@@ -151,4 +127,3 @@ char	*delimiter_input(t_minishell *minish, char *input, int x)
 		return (0);
 	return (ft_strjoin(cmd, input + x));
 }
-//ARGS CAN BE AFTER NAME FILE IN REDIRECIONS
