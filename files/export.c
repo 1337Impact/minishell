@@ -6,7 +6,7 @@
 /*   By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 12:05:27 by tnamir            #+#    #+#             */
-/*   Updated: 2022/04/12 14:26:45 by tnamir           ###   ########.fr       */
+/*   Updated: 2022/04/14 17:36:06 by tnamir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ char	*var_name_func(char *var)
 {
 	int		i;
 	char	*var_name;
-	char	*name;
 
 	i = 0;
 	while (var[i] != '=' && var[i])
