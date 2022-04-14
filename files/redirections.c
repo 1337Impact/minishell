@@ -6,7 +6,7 @@
 /*   By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 09:52:37 by mbenkhat          #+#    #+#             */
-/*   Updated: 2022/04/13 16:41:22 by tnamir           ###   ########.fr       */
+/*   Updated: 2022/04/14 00:03:07 by tnamir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,8 @@ char	*redirect_output(t_minishell *minish, char *input, int x)
 	minish->p = 1;
 	conditions(minish, cmd);
 	close(minish->w_fd);
-	free(cmd);
-	free(file_name);
 	x = check_metacharacters(input);
+	free(file_name);
 	if (!input[x])
 		return (0);
 	return (ft_strjoin(cmd, input + x));
@@ -84,7 +83,6 @@ char	*redirect_input(t_minishell *minish, char *input, int x)
 	minish->p = 3;
 	conditions(minish, cmd);
 	close(minish->r_fd);
-	free(cmd);
 	free(file_name);
 	x = check_metacharacters(input);
 	if (!input[x])
@@ -113,7 +111,6 @@ char	*redirect_append(t_minishell *minish, char *input, int x)
 	minish->p = 1;
 	conditions(minish, cmd);
 	close(minish->w_fd);
-	free(cmd);
 	free(file_name);
 	x = check_metacharacters(input);
 	if (!input[x])
@@ -133,10 +130,11 @@ char	*delimiter_input(t_minishell *minish, char *input, int x)
 	delimiter = one_file_input(rm_late_sp(rm_early_sp(input)));
 	delimiter = quotes_handler(ft_substr(delimiter, 0,
 				check_metacharacters(delimiter)), minish);
+	rd_input = NULL;
 	pipe(fd);
 	minish->r_fd = fd[0];
 	rd_input = readline("heredoc> ");
-	while (ft_strncmp(rd_input, delimiter, ft_strlen(rd_input) + 1))
+	while (ft_strncmp(rd_input, delimiter, ft_strlen(delimiter) + 1))
 	{
 		ft_putendl_fd(rd_input, fd[1]);
 		free(rd_input);
@@ -147,10 +145,10 @@ char	*delimiter_input(t_minishell *minish, char *input, int x)
 	conditions(minish, cmd);
 	close(minish->r_fd);
 	close(fd[1]);
-	free(cmd);
 	free(delimiter);
 	x = check_metacharacters(input);
 	if (!input[x])
 		return (0);
 	return (ft_strjoin(cmd, input + x));
 }
+//ARGS CAN BE AFTER NAME FILE IN REDIRECIONS

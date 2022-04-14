@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   metacharacters.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: mbenkhat <mbenkhat@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 08:57:42 by mbenkhat          #+#    #+#             */
-/*   Updated: 2022/04/13 16:20:05 by tnamir           ###   ########.fr       */
+/*   Updated: 2022/04/13 15:48:06 by mbenkhat         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,12 @@ int	check_metacharacters(char *input)
 		return (i);
 	if (!(ft_isalnum(input[i + 1]) || input[i + 1] == '\''
 			|| input[i + 1] == '\"' || input[i + 1] == '$'
-			|| input[i + 1] == ' '|| (input[i + 1] == '>' && input[i + 2] != '>')|| (input[i + 1] == '<' && input[i + 2] != '<')))
+			|| input[i + 1] == ' '|| input[i + 1] == '>'|| input[i + 1] == '<'))
 		return (0);
 	return (i);
 }
+
+/////// while x + 1 to increment input after to let it pass spaces
 
 void	pipex(char *input, t_minishell *minish, int *x)
 {
