@@ -6,7 +6,7 @@
 /*   By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 15:18:08 by tnamir            #+#    #+#             */
-/*   Updated: 2022/04/14 15:18:23 by tnamir           ###   ########.fr       */
+/*   Updated: 2022/04/16 17:54:12 by tnamir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,4 +34,18 @@ char	*one_file_input(char	*input)
 		x++;
 	}
 	return (ft_substr(input, 0, x));
+}
+
+char	*who_file(char *input, t_minishell *minish)
+{
+	char	*file_name;
+	char	*file;
+	char	*pure_file_name;
+
+	file = one_file_input(rm_late_sp(rm_early_sp(input)));
+	file_name = ft_substr(file, 0, check_metacharacters(file));
+	free(file);
+	pure_file_name = quotes_handler(file_name, minish);
+	free(file_name);
+	return (pure_file_name);
 }
