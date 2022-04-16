@@ -6,7 +6,7 @@
 /*   By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 18:39:20 by tnamir            #+#    #+#             */
-/*   Updated: 2022/04/09 09:06:52 by tnamir           ###   ########.fr       */
+/*   Updated: 2022/04/16 23:39:05 by tnamir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ char	**cpy_it(char	*input, char	**options)
 
 	size = count_cmds(input);
 	options = ft_calloc(size + 1, sizeof(char *));
+	if (!options)
+		return (0);
 	x = 0;
 	y = -1;
 	while (++y < size)

@@ -6,7 +6,7 @@
 /*   By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 11:29:51 by mbenkhat          #+#    #+#             */
-/*   Updated: 2022/04/12 14:19:39 by tnamir           ###   ########.fr       */
+/*   Updated: 2022/04/16 23:40:02 by tnamir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ char	**unset_var(char *var_name, char **local_env)
 	char	**new_env;
 
 	new_env = ft_calloc((twod_array_len(local_env) + 1), sizeof(char *));
+	if (!new_env)
+		return (0);
 	i = 0;
 	x = 0;
 	len = ft_strlen(var_name);
@@ -50,9 +52,7 @@ char	**unset_var(char *var_name, char **local_env)
 			i++;
 			continue ;
 		}
-		new_env[x] = local_env[i];
-		i++;
-		x++;
+		new_env[x++] = local_env[i++];
 	}
 	new_env[x] = 0;
 	free(local_env);

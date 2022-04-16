@@ -6,7 +6,7 @@
 /*   By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/03 13:45:57 by tnamir            #+#    #+#             */
-/*   Updated: 2022/04/13 15:02:41 by tnamir           ###   ########.fr       */
+/*   Updated: 2022/04/16 23:28:50 by tnamir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ static void	more_conditions(t_minishell *minishell)
 	else if (f_or_d(minishell->options[0]) == 'd')
 		cd(minishell->options[0], minishell);
 	else if (minishell->options[0][0] != '\0')
-		execute(minishell->options[0], minishell, minishell->options);
+		execute(ft_strdup(minishell->options[0]), minishell,
+			minishell->options);
 	else
 		errory(minishell);
 }
@@ -42,8 +43,16 @@ void	conditions(t_minishell *minishell,
 		ft_exit(minishell);
 	else if (!ft_strncmp(minishell->options[0], "pwd", 4))
 	{
-		ft_putendl_fd(minishell->current_dir, minishell->w_fd);
-		minishell->exit_status = 0;
+		if (twod_array_len(minishell->options) > 1)
+		{
+			ft_putendl_fd("pwd: too many arguments", 2);
+			minishell->exit_status = 1;
+		}
+		else
+		{
+			ft_putendl_fd(minishell->current_dir, minishell->w_fd);
+			minishell->exit_status = 0;
+		}
 	}
 	else
 		more_conditions(minishell);

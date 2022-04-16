@@ -6,7 +6,7 @@
 /*   By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 16:57:23 by tnamir            #+#    #+#             */
-/*   Updated: 2022/04/16 22:25:57 by tnamir           ###   ########.fr       */
+/*   Updated: 2022/04/16 23:46:58 by tnamir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ static char	*var_name(char	*str, int	*x)
 		&& str[i] != '$' && str[i] != '/' && str[i] != '\'')
 		i++;
 	p = malloc(i + 1);
+	if (!p)
+		return (0);
 	i = 0;
 	while (str[i] && str[i] != ' ' && str[i] != '\"'
 		&& str[i] != '$' && str[i] != '/' && str[i] != '\'')

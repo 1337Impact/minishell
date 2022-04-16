@@ -6,7 +6,7 @@
 /*   By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 15:29:23 by tnamir            #+#    #+#             */
-/*   Updated: 2022/04/09 08:01:33 by tnamir           ###   ########.fr       */
+/*   Updated: 2022/04/16 23:39:21 by tnamir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ char	*ft_charjoin(char	*str, char c)
 	int		x;
 
 	p = malloc(ft_strlen(str) + 2);
+	if (!p)
+		return (0);
 	x = -1;
 	while (str[++x])
 		p[x] = str[x];
@@ -50,6 +52,8 @@ char	*quotes_handler(char *str, t_minishell *minish)
 	int		x;
 
 	buff = ft_calloc(ft_strlen(str) + 1, 1);
+	if (!buff)
+		return (0);
 	x = 0;
 	while (str[x])
 	{

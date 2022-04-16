@@ -6,7 +6,7 @@
 /*   By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 17:04:25 by tnamir            #+#    #+#             */
-/*   Updated: 2022/04/16 18:01:00 by tnamir           ###   ########.fr       */
+/*   Updated: 2022/04/16 23:25:37 by tnamir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ static char	*check_access(char *cmd, char **all_paths)
 		}
 		free(cmd_path);
 	}
+	free(cmd);
 	twod_free(all_paths);
 	return (0);
 }
@@ -101,5 +102,6 @@ void	execute(char *cmd, t_minishell *minish, char **argv)
 	{
 		wait(&status);
 		minish->exit_status = WEXITSTATUS(status);
+		free(cmd);
 	}
 }
