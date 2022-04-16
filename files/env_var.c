@@ -6,7 +6,7 @@
 /*   By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 16:57:23 by tnamir            #+#    #+#             */
-/*   Updated: 2022/04/08 23:45:54 by tnamir           ###   ########.fr       */
+/*   Updated: 2022/04/16 22:25:57 by tnamir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,16 @@ static char	*var_name(char	*str, int	*x)
 char	*var_handler(char *buff, char *str, t_minishell *minish, int *x)
 {
 	char	*var;
+	char	*nbr;
 
 	*x += 1;
 	if (str[*x] == ' ' || !str[*x])
 		buff = ft_charjoin(buff, '$');
 	else if (str[*x] == '?')
 	{
-		buff = ft_strjoin(buff, ft_itoa(minish->exit_status));
+		nbr = ft_itoa(minish->exit_status);
+		buff = ft_strjoin(buff, nbr);
+		free(nbr);
 		*x += 1;
 	}
 	else
