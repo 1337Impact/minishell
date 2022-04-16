@@ -6,7 +6,7 @@
 /*   By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 12:05:27 by tnamir            #+#    #+#             */
-/*   Updated: 2022/04/14 17:36:06 by tnamir           ###   ########.fr       */
+/*   Updated: 2022/04/16 17:35:52 by tnamir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ char	**local_to_new(t_minishell *minish, char **local_env,
 		new_env[x] = local_env[x];
 	new_env[x] = ft_strdup(minish->options[y]);
 	new_env[++x] = 0;
+	free(local_env);
 	return (new_env);
 }
 
