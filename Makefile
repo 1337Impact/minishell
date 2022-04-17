@@ -6,7 +6,7 @@
 #    By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/15 16:38:27 by tnamir            #+#    #+#              #
-#    Updated: 2022/04/17 22:45:45 by tnamir           ###   ########.fr        #
+#    Updated: 2022/04/17 22:46:52 by tnamir           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,10 +28,10 @@ OBJS = $(SRC:.c=.o)
 
 all : $(NAME)
 
-$(NAME) : $(OBJS) $(LIBFT)
+$(NAME) : $(OBJS) $(LIBFT) $(HEADER)
 	@cc $(FLAGS) $(OBJS) $(LIBFT) -o $(NAME)
 
-%.o: %.c $(HEADER)
+%.o: %.c
 	@cc $(FLAGS) $(RL_FLAG) -c -o $@ $<
 
 $(LIBFT) :
