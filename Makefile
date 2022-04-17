@@ -6,7 +6,7 @@
 #    By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/15 16:38:27 by tnamir            #+#    #+#              #
-#    Updated: 2022/04/14 17:35:51 by tnamir           ###   ########.fr        #
+#    Updated: 2022/04/17 22:45:45 by tnamir           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@
 
 HEADER = minishell.h
 
-FLAGS = -Wall -Wextra -Werror -L$(shell brew --prefix readline)/lib -I$(shell brew --prefix readline)/include -lreadline
+FLAGS = -L/Users/tnamir/.brew/opt/readline/lib -I/Users/tnamir/.brew/opt/readline/include -lreadline
 
 SRC = main.c ./files/execute.c ./files/f_or_d.c ./files/sp_remover.c ./files/quotes_handler.c ./files/builtins_cmds.c \
  ./files/utils.c ./files/env_var.c ./files/cpy.c ./files/export.c ./files/unset.c ./files/pipes.c ./files/redirections.c \
@@ -24,15 +24,15 @@ NAME = minishell
 
 LIBFT = ./libft/libft.a
 
-# OBJS = $(SRC:.c=.o)
+OBJS = $(SRC:.c=.o)
 
 all : $(NAME)
 
 $(NAME) : $(OBJS) $(LIBFT)
-	@cc $(FLAGS) $(SRC) $(LIBFT) -o $(NAME)
+	@cc $(FLAGS) $(OBJS) $(LIBFT) -o $(NAME)
 
-# %.o: %.c $(HEADER)
-# 	@cc $(FLAGS) $(RL_FLAG) -c -o $@ $<
+%.o: %.c $(HEADER)
+	@cc $(FLAGS) $(RL_FLAG) -c -o $@ $<
 
 $(LIBFT) :
 	@$(MAKE) -C ./libft
