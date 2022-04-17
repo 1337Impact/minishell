@@ -6,7 +6,7 @@
 /*   By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 08:57:42 by mbenkhat          #+#    #+#             */
-/*   Updated: 2022/04/16 23:52:46 by tnamir           ###   ########.fr       */
+/*   Updated: 2022/04/17 17:20:19 by tnamir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,11 +62,39 @@ void	pipex(char *input, t_minishell *minish, int *x)
 		*x += 1;
 }
 
+char	*metacond(char *input, t_minishell *minish, int *x)
+{
+	if (*x == 0)
+		print_error("minishell: parse error", NULL, minish, 130);
+	else if (input[*x] == '>')
+	{
+		if (input[*x] == '>' && input[*x + 1] == '>')
+			input = redirect_append(minish, input, *x);
+		else
+			input = redirect_output(minish, input, *x);
+		if (!input)
+			return (0);
+		*x = -1;
+	}
+	else if (input[*x] == '<')
+	{
+		if (input[*x] == '<' && input[*x + 1] == '<')
+			input = delimiter_input(minish, input, *x);
+		else
+			input = redirect_input(minish, input, *x);
+		if (!input)
+			return (0);
+		*x = -1;
+	}
+	else if (input[*x] == '|')
+		pipex(input, minish, x);
+	return (input);
+}
+
 int	metacharacters(char *input, t_minishell *minish)
 {
 	int		x;
 
-	(void)minish;
 	x = check_metacharacters(input);
 	if (!input[x])
 		return (0);
@@ -81,30 +109,12 @@ int	metacharacters(char *input, t_minishell *minish)
 			close(minish->r_fd);
 			return (1);
 		}
-		if (!x)
-			print_error("minishell: parse error", NULL, minish, 130);
-		else if (input[x] == '>')
+		else
 		{
-			if (input[x] == '>' && input[x + 1] == '>')
-				input = redirect_append(minish, input, x);
-			else
-				input = redirect_output(minish, input, x);
+			input = metacond(input, minish, &x);
 			if (!input)
 				return (1);
-			x = -1;
 		}
-		else if (input[x] == '<')
-		{
-			if (input[x] == '<' && input[x + 1] == '<')
-				input = delimiter_input(minish, input, x);
-			else
-				input = redirect_input(minish, input, x);
-			if (!input)
-				return (1);
-			x = -1;
-		}
-		else if (input[x] == '|')
-			pipex(input, minish, &x);
 		input += x + 1;
 	}
 	return (1);
