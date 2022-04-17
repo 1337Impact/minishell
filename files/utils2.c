@@ -6,7 +6,7 @@
 /*   By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 15:18:08 by tnamir            #+#    #+#             */
-/*   Updated: 2022/04/16 17:54:12 by tnamir           ###   ########.fr       */
+/*   Updated: 2022/04/17 17:32:05 by tnamir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,30 @@ char	*who_file(char *input, t_minishell *minish)
 	pure_file_name = quotes_handler(file_name, minish);
 	free(file_name);
 	return (pure_file_name);
+}
+
+char	*redirect_strjoin(char	*s1, char	*s2)
+{
+	char		*p;
+	size_t		x;
+	size_t		y;
+
+	y = 0;
+	x = 0;
+	if (s1 != 0 || s2 != 0)
+	{
+		p = malloc((ft_strlen(s1) + ft_strlen(s2)) * sizeof(char) + 1);
+		if (p == NULL)
+			return (0);
+		while (x < ft_strlen(s1))
+		{
+			p[x] = s1[x];
+			x++;
+		}
+		while (y <= ft_strlen(s2))
+			p[x++] = s2[y++];
+		free(s1);
+		return (p);
+	}
+	return (0);
 }
