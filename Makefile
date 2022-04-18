@@ -6,15 +6,17 @@
 #    By: tnamir <tnamir@student.1337.ma>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/15 16:38:27 by tnamir            #+#    #+#              #
-#    Updated: 2022/04/17 22:46:52 by tnamir           ###   ########.fr        #
+#    Updated: 2022/04/18 22:53:11 by tnamir           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 #								  -*-Makefile-*-							   #
 
+RED='\033[0;31m'
+
 HEADER = minishell.h
 
-FLAGS = -L/Users/tnamir/.brew/opt/readline/lib -I/Users/tnamir/.brew/opt/readline/include -lreadline
+FLAGS = -Wall -Werror -Wextra -L$(shell brew --prefix readline)/lib -I$(shell brew --prefix readline)/include -lreadline
 
 SRC = main.c ./files/execute.c ./files/f_or_d.c ./files/sp_remover.c ./files/quotes_handler.c ./files/builtins_cmds.c \
  ./files/utils.c ./files/env_var.c ./files/cpy.c ./files/export.c ./files/unset.c ./files/pipes.c ./files/redirections.c \
@@ -24,21 +26,22 @@ NAME = minishell
 
 LIBFT = ./libft/libft.a
 
-OBJS = $(SRC:.c=.o)
-
 all : $(NAME)
 
-$(NAME) : $(OBJS) $(LIBFT) $(HEADER)
-	@cc $(FLAGS) $(OBJS) $(LIBFT) -o $(NAME)
+$(NAME)	:	$(HEADER) $(SRC) $(LIBFT)
+	@cc $(FLAGS) $(SRC) $(LIBFT) -lreadline -o $(NAME)
 
-%.o: %.c
-	@cc $(FLAGS) $(RL_FLAG) -c -o $@ $<
+	@echo ${RED}" __  __ _       _     _          _ _ "
+	@echo ${RED}"|  \/  (_)_ __ (_)___| |__   ___| | |"
+	@echo ${RED}"| |\/| | | '_ \| / __| '_ \ / _ \ | |"
+	@echo ${RED}"| |  | | | | | | \__ \ | | |  __/ | |"
+	@echo ${RED}"|_|  |_|_|_| |_|_|___/_| |_|\___|_|_|1337"
 
 $(LIBFT) :
 	@$(MAKE) -C ./libft
 
 clean :
-	@rm -rf ./libft/*.o $(OBJS)
+	@rm -rf ./libft/*.o
 
 fclean : clean
 	@rm -rf $(LIBFT) $(NAME)
